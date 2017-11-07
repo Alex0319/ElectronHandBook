@@ -13,14 +13,21 @@ public class User extends UserDto{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         User user = (User) o;
 
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-
+        if (password != null ? !password.equals(user.password) : user.password != null) {
+            return false;
+        }
         return true;
     }
 

@@ -2,9 +2,9 @@ package by.iba.electronhandbook.bean;
 
 public class Study extends AbstractEntity{
     private String name;
-    private int hours;
+    private Integer hours;
     private Professor professor;
-    private double avgMark;
+    private Double avgMark;
 
     public String getName() {
         return name;
@@ -22,20 +22,20 @@ public class Study extends AbstractEntity{
         this.hours = hours;
     }
 
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
-
     public double getAvgMark() {
         return avgMark;
     }
 
     public void setAvgMark(double avgMark) {
         this.avgMark = avgMark;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     @Override
@@ -49,13 +49,13 @@ public class Study extends AbstractEntity{
 
         Study study = (Study) o;
 
-        if (hours != study.hours) {
+        if (hours != study.hours){
             return false;
         }
-        if (Double.compare(study.avgMark, avgMark) != 0) {
+        if (Double.compare(study.avgMark, avgMark) != 0){
             return false;
         }
-        if (name != null ? !name.equals(study.name) : study.name != null) {
+        if (name != null ? !name.equals(study.name) : study.name != null){
             return false;
         }
         return professor != null ? professor.equals(study.professor) : study.professor == null;

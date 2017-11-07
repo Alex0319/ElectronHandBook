@@ -7,7 +7,7 @@ public class Professor extends AbstractEntity{
     private String secondName;
     private String fatherName;
     private Date birthDate;
-    private double avgMark;
+    private Double avgMark;
 
     public String getFirstName() {
         return firstName;

@@ -19,7 +19,7 @@ public class StudyDaoImpl extends MySqlGenericDaoImpl<Study>{
     protected Study fillEntity(ResultSet resultSet) throws SQLException {
         Study study = new Study();
         Professor professor = new Professor();
-        study.setId(resultSet.getInt("ID"));
+        study.setId(resultSet.getInt("STUDY_ID"));
         study.setName(resultSet.getString("NAME"));
         study.setHours(resultSet.getInt("HOURS"));
         study.setAvgMark(resultSet.getDouble("STUDY_AVG_MARK"));
@@ -27,8 +27,6 @@ public class StudyDaoImpl extends MySqlGenericDaoImpl<Study>{
         professor.setFirstName(resultSet.getString("FIRST_NAME"));
         professor.setSecondName(resultSet.getString("SECOND_NAME"));
         professor.setFatherName(resultSet.getString("FATHER_NAME"));
-        professor.setBirthDate(resultSet.getDate("BIRTH_DATE"));
-        professor.setAvgMark(resultSet.getDouble("PROFESSOR_AVG_MARK"));
         study.setProfessor(professor);
         return study;
     }

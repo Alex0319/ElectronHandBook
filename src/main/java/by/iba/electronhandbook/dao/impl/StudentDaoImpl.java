@@ -24,7 +24,6 @@ public class StudentDaoImpl extends MySqlGenericDaoImpl<Student> {
         student.setSecondName(resultSet.getString("SECOND_NAME"));
         student.setAvgMark(resultSet.getDouble("AVG_MARK"));
         group.setId(resultSet.getInt("GROUP_NUMBER"));
-        group.setAvgMark(resultSet.getDouble("GROUP_AVG_MARK"));
         student.setGroup(group);
         return student;
     }

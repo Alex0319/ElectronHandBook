@@ -213,7 +213,6 @@ var parentModal = '';
 var childModal = '#modalWindow0';
 var arrayObj = {};
 var oldTarget;
-var rowNumber = 0;
 
 function deleteRow(obj) {
     $.ajax({
@@ -293,6 +292,17 @@ function addData() {
     ($(editBodyAdd[0].lastElementChild).find("button")[0]).addEventListener("click",sendAddData);
 }*/
 
+function buildObjStr(obj) {
+    var result = '';
+    for(var key in obj){
+        if(key === 'id')
+            result = obj[key] + ' ' + result;
+        else
+            result += obj[key] + ' ';
+    }
+    return result.trim();
+}
+
 function buildTableHead(tableName, data) {
     var columnTrString = '';
     var countColumn = 0;
@@ -323,7 +333,7 @@ function setHtml(){
             if($.isPlainObject(Data[j][key]))
             {
                 futureQueryForID[key] = key;
-                additionalString +='<td class="embeddedTd" id="'+(Data[j][key])['id']+'" data-toggle="modal" data-target="#modalWindow'+deep+'" onclick="generateModals(this)">'+(Data[j][key])['id']+'</td>';
+                additionalString +='<td class="embeddedTd" id="'+(Data[j][key])['id']+'" data-toggle="modal" data-target="#modalWindow'+deep+'" onclick="generateModals(this)">'+ buildObjStr(Data[j][key])+'</td>';
             }else
                 additionalString +='<td>'+Data[j][key]+'</td>';
             }
@@ -343,7 +353,6 @@ function fillForm(rowIndex) {
     for (var key in Data[rowIndex]){
         $('#' + key).val(Data[rowIndex][key]);
     }
-    console.log(Data[rowIndex]);
 }
 
 function getAllTableElements(nameTable) {
@@ -372,7 +381,7 @@ function editRow(obj) {
                 'action': function () {
                     //                        elem.slideUp();
                 }
-            },
+            }
         }
     });
 }

@@ -3,7 +3,7 @@ package by.iba.electronhandbook.bean;
 public class Student extends AbstractEntity {
     private String firstName;
     private String secondName;
-    private double avgMark;
+    private Double avgMark;
     private Group group;
 
     public String getFirstName() {
@@ -40,36 +40,36 @@ public class Student extends AbstractEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this == o){
             return true;
         }
-        if (!(o instanceof Student)) {
+        if (!(o instanceof Student)){
             return false;
         }
 
         Student student = (Student) o;
 
-        if (Double.compare(student.avgMark, avgMark) != 0) {
+        if (Double.compare(student.avgMark, avgMark) != 0){
             return false;
         }
-        if (!firstName.equals(student.firstName)) {
+        if (firstName != null ? !firstName.equals(student.firstName) : student.firstName != null){
             return false;
         }
-        if (!secondName.equals(student.secondName)){
+        if (secondName != null ? !secondName.equals(student.secondName) : student.secondName != null){
             return false;
         }
-        return group.equals(student.group);
+        return group != null ? group.equals(student.group) : student.group == null;
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = firstName.hashCode();
-        result = 31 * result + secondName.hashCode();
+        result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
         temp = Double.doubleToLongBits(avgMark);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + group.hashCode();
+        result = 31 * result + (group != null ? group.hashCode() : 0);
         return result;
     }
 }
