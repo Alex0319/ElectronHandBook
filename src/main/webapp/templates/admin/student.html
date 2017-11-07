@@ -1,0 +1,27 @@
+<form class="updateOrAddForm" action="" method="post" name="updateOrAddForm">
+    <ul>
+        <li>
+            <label for="id">Id:</label>
+            <input type="text" name="id" id="id" readonly/>
+        </li>
+        <li>
+            <label for="firstName">Firstname:</label>
+            <input type="text" name="firstName" id="firstName" placeholder="Alex" minlength="2" maxlength="50" required />
+            <span class="formHint">Firstname could contain from 2 to 50 chars</span>
+        </li>
+        <li>
+            <label for="secondName">Lastname:</label>
+            <input type="text" name="secondName" id="secondName" placeholder="Savchuk" minlength="2" maxlength="70" required />
+            <span class="formHint">Secondname could contain from 2 to 70 chars</span>
+        </li>
+        <li>
+            <label for="avgMark">Average mark:</label>
+            <input type="text" name="avgMark" id="avgMark" placeholder="8.7" min="0" max="10" required />
+            <span class="formHint">Average mark could be 0 to 10 chars</span>
+        </li>
+        <li>
+            <label for="group">Group number:</label>
+            <select name="group" id="group"></select>
+        </li>
+    </ul>
+</form>

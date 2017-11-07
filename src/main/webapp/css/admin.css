@@ -1,0 +1,151 @@
+:root{
+    --sR: #418a95;
+    --sRLight: #48b2b7;
+    --sRDark: #418a95 - #222;
+    --darkGrey:#6b6b6b;
+    --offWhite:#f6f3f7;
+    --bg:#f6f3f7 - #111;
+    --darkBg:#f6f3f7 - #222;
+}
+
+*{
+    margin:0;
+    padding:0;
+    font-family:Lato;
+}
+
+body{
+    padding:0px;
+    background: var(--bg);
+}
+
+.flatTable {
+    width: 95%;
+    min-width: 500px;
+    border-collapse: collapse;
+    font-weight: bold;
+    color:var(--darkGrey);
+    margin: auto;
+    border: 2px solid var(--sR);
+    border-radius: .25rem;
+}
+
+tr{
+    height:50px;
+    background:var(--darkBg);
+    border-bottom:rgba(0,0,0,.05) 1px solid;
+}
+
+td{
+    box-sizing:border-box;
+    padding-left:30px;
+}
+
+.titleTr{
+    height:70px;
+    color:#f6f3f7;
+    background:var(--sR);
+    border:0px solid;
+}
+
+.plusTd{
+    background:url(/images/add.png) center center no-repeat, rgba(0,0,0,.1);
+}
+
+.changeTd{
+    position:relative;
+    width:80px;
+    cursor:pointer;
+}
+
+.changeTd:hover{
+    background: var(--sRLight);
+}
+
+.deleteTd{
+    position:relative;
+    width:80px;
+    background: inherit;
+    cursor:pointer;
+}
+
+.deleteTd:hover{
+    background: var(--sRLight);
+}
+
+img{
+    width:20px;
+    height: 20px;
+}
+
+.headingTr{
+    height:30px;
+    color:var(--offWhite);
+    font-size:8pt;
+    border:0px solid;
+    background:var(--sRLight);
+}
+
+.embeddedTd{
+    cursor: pointer;
+}
+
+.embeddedTd:hover{
+    background: var(--sRLight);
+}
+
+.button{
+    text-align:center;
+    cursor:pointer;
+}
+
+.sForm {
+    position: absolute;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background: var(--darkBg);
+    overflow: hidden;
+    transition: width 1s, right .3s;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.title{
+    width:100%;
+    height:70px;
+    padding-top:20px;
+    padding-left:20px;
+    box-sizing:border-box;
+    background:rgba(0,0,0,.1);
+}
+
+.open{
+    right:0;
+    width:400px !important;
+}
+
+.display{
+    width:300px;
+}
+
+.changeData{
+    padding-left: 0;
+    text-align: center;
+}
+
+.settingsIcon{
+    float: left;
+    background:inherit;
+    height:50px;
+    padding-top:15px;
+    box-sizing:border-box;
+    text-align:center;
+    overflow:hidden;
+    transition:width 1s;
+}
+
+tr:nth-child(2n + 3){
+    background: #f0f0f0;
+}

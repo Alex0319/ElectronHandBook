@@ -1,0 +1,70 @@
+:root{
+    --mainColor: #48cfad;
+    --mainHover: #37bc9b;
+    --secondaryColor: #3a3a3a;
+    --secondaryHover: #333;
+}
+
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: "Roboto";
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+     content: '';
+     position: fixed;
+     z-index: -1;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+ }
+
+nav {
+    position: relative;
+    width: 95%;
+    margin: 30px auto;
+}
+
+nav ul {
+    background: var(--mainColor);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    position: relative;
+    display: inline-block;
+    margin-right: -4px;
+    text-align: center;
+}
+
+nav ul li:last-child {
+     margin: 0;
+}
+
+nav ul li a {
+    display: block;
+    background: var(--mainColor);
+    padding: 15px 20px;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.2s linear;
+}
+
+nav ul li a:hover {
+    text-decoration: none;
+    background: var(--mainHover);
+}
+
+nav ul li a:active{
+    text-decoration: none;
+}
