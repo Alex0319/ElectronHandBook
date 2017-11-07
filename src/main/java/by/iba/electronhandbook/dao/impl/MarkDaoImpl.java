@@ -22,23 +22,24 @@ public class MarkDaoImpl extends MySqlGenericDaoImpl<Mark>{
         Student student = new Student();
         Professor professor = new Professor();
 
-        mark.setId(resultSet.getInt("MARK_ID"));
-        mark.setDate(resultSet.getDate("DATE"));
-        mark.setMark(resultSet.getInt("MARK"));
-        mark.setComments(resultSet.getString("COMMENTS"));
+        if(resultSet != null) {
+            mark.setId(resultSet.getInt("MARK_ID"));
+            mark.setDate(resultSet.getDate("DATE"));
+            mark.setMark(resultSet.getInt("MARK"));
+            mark.setComments(resultSet.getString("COMMENTS"));
 
-        study.setId(resultSet.getInt("STUDY_ID"));
-        study.setName(resultSet.getString("NAME"));
+            study.setId(resultSet.getInt("STUDY_ID"));
+            study.setName(resultSet.getString("NAME"));
 
-        professor.setId(resultSet.getInt("PROFESSOR_ID"));
-        professor.setFirstName(resultSet.getString("PROFESSOR_FIRST_NAME"));
-        professor.setSecondName(resultSet.getString("PROFESSOR_SECOND_NAME"));
-        professor.setFatherName(resultSet.getString("FATHER_NAME"));
+            professor.setId(resultSet.getInt("PROFESSOR_ID"));
+            professor.setFirstName(resultSet.getString("PROFESSOR_FIRST_NAME"));
+            professor.setSecondName(resultSet.getString("PROFESSOR_SECOND_NAME"));
+            professor.setFatherName(resultSet.getString("FATHER_NAME"));
 
-        student.setId(resultSet.getInt("STUDENT_ID"));
-        student.setFirstName(resultSet.getString("FIRST_NAME"));
-        student.setSecondName(resultSet.getString("SECOND_NAME"));
-
+            student.setId(resultSet.getInt("STUDENT_ID"));
+            student.setFirstName(resultSet.getString("FIRST_NAME"));
+            student.setSecondName(resultSet.getString("SECOND_NAME"));
+        }
         mark.setStudy(study);
         mark.setProfessor(professor);
         mark.setStudent(student);

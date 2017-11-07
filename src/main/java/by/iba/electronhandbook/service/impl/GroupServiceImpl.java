@@ -5,6 +5,7 @@ import by.iba.electronhandbook.dao.impl.GroupDaoImpl;
 import by.iba.electronhandbook.exception.ServiceException;
 import by.iba.electronhandbook.service.AbstractService;
 
+import java.util.List;
 import java.util.Map;
 
 public class GroupServiceImpl extends AbstractService<Group>{
@@ -25,5 +26,14 @@ public class GroupServiceImpl extends AbstractService<Group>{
             id = Integer.parseInt(params.get("PREV_ID")[0]);
         }
         return group;
+    }
+
+    @Override
+    public List<Group> getAllDto() throws ServiceException {
+        List<Group> groups = getAll();
+        for(Group group: groups){
+            group.setAvgMark(null);
+        }
+        return groups;
     }
 }

@@ -303,6 +303,13 @@ function buildObjStr(obj) {
     return result.trim();
 }
 
+function buildTableTitle(tableName, columnTrString, countColumn) {
+    var mainHeader = '<tr class="titleTr"><td class="titleTd">'+tableName.toUpperCase()+'</td><td colspan="' + (countColumn ? countColumn : 0) + '"></td><td class="plusTd button"></td></tr>';
+    if(columnTrString)
+        mainHeader += columnTrString;
+    return '<thead>' + mainHeader + '</thead>';
+}
+
 function buildTableHead(tableName, data) {
     var columnTrString = '';
     var countColumn = 0;
@@ -312,47 +319,86 @@ function buildTableHead(tableName, data) {
         countColumn++;
     }
     if(typeof data !== 'undefined')
-        columnTrString += '<td class="changeData">UPDATE</td><td class="changeData">DELETE</td>'
-
-    var mainHeader = '<tr class="titleTr"><td class="titleTd">'+tableName.toUpperCase()+'</td><td colspan="'+countColumn+'"></td><td class="plusTd button"></td></tr>';
-    mainHeader += '<tr class="headingTr">' + columnTrString + '</tr>';
-    return '<thead>' + mainHeader + '</thead>';
+        columnTrString += '<td class="changeData">UPDATE</td><td class="changeData">DELETE</td>';
+    return {'head' : '<tr class="headingTr">' + columnTrString + '</tr>',
+            'countColumn' : countColumn};
 }
 
 function setHtml(){
     var countRows = Data.length;
     var bodyString = '';
     var j = 0;
+    var head={};
     zIndex = 1050;
 
-    while(j!=countRows){
-        var strRow = '<tr id="'+Data[j].id+'">row</tr>';
-        var patternRow = /row/;
-        var additionalString = '';
-        for(var key in Data[j]) {
-            if($.isPlainObject(Data[j][key]))
-            {
-                futureQueryForID[key] = key;
-                additionalString +='<td class="embeddedTd" id="'+(Data[j][key])['id']+'" data-toggle="modal" data-target="#modalWindow'+deep+'" onclick="generateModals(this)">'+ buildObjStr(Data[j][key])+'</td>';
-            }else
-                additionalString +='<td>'+Data[j][key]+'</td>';
+    if (!emptyData(Data[0])) {
+        while (j != countRows) {
+            var additionalString = '';
+            for (var key in Data[j]) {
+                if ($.isPlainObject(Data[j][key])) {
+                    futureQueryForID[key] = key;
+                    additionalString += '<td class="embeddedTd" id="' + (Data[j][key])['id'] + '" data-toggle="modal" data-target="#modalWindow' + deep + '" onclick="generateModals(this)">' + buildObjStr(Data[j][key]) + '</td>';
+                } else
+                    additionalString += '<td>' + Data[j][key] + '</td>';
             }
 
-        additionalString+='<td class="changeTd" onclick="editRow(this.parentNode)"><div class="settingsIcon"><img src="/images/pencil32.png"/></div>' +
-            '<td class="deleteTd" onclick="deleteRow(this.parentNode)"><div class="settingsIcon"><img src="/images/delete.png"/></div></td>';
-        bodyString += strRow.replace(patternRow,additionalString);
-        j++;
+            additionalString += '<td class="changeTd" onclick="editRow(this.parentNode)"><div class="settingsIcon"><img src="/images/pencil32.png"/></div>' +
+                '<td class="deleteTd" onclick="deleteRow(this.parentNode)"><div class="settingsIcon"><img src="/images/delete.png"/></div></td>';
+            bodyString += '<tr id="' + Data[j].id + '">' + additionalString + '</tr>';
+            j++;
+        }
+        head = buildTableHead(NameTable, Data[0]);
     }
-
-//    generateSelectChilds();
-    var body = '<tbody>'+ bodyString+ '</tbody>';
-    $('.flatTable').html(buildTableHead(NameTable, Data[0]) + body);
+    $('.flatTable').html(buildTableTitle(NameTable, head['head'], head['countColumn']) + '<tbody>'+ bodyString+ '</tbody>');
 }
 
 function fillForm(rowIndex) {
     for (var key in Data[rowIndex]){
         $('#' + key).val(Data[rowIndex][key]);
     }
+}
+
+function emptyData(data) {
+    for(var key in data){
+        if(key !== 'id' && !$.isPlainObject(data[key]))
+            return false;
+        if($.isPlainObject(data[key]))
+            for(var key2 in data[key]){
+                if(key2 !== 'id' && !$.isPlainObject(data[key2]))
+                    return false;
+            }
+    }
+    return true;
+}
+
+function loadRequiredData(rowNumber) {
+    var requiredData = {};
+    var obj = Data[rowNumber];
+    for (var key in obj) {
+        if($.isPlainObject(obj[key])){
+            requiredData[key] = new Array();
+            var i = 0;
+            for (var keyData in obj[key]){
+                requiredData[key][i++] = keyData;
+            }
+        }
+    }
+    $.get('/main/get_required_data', $.param(requiredData), function (data, status) {
+        if(status == 'success'){
+            for(var key in data){
+                var options = '';
+                for(var i = 0; i < data[key].length; i++){
+                    var result = '';
+                    for(var value in (data[key])[i]){
+                        var selected = value=='id' && (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
+                        result += ((data[key])[i])[value] + ' ';
+                    }
+                    options += '<option value="' + result.trim() + '" '+ selected +'>' + result.trim() + '</option>';
+                }
+                $('#'+key).html(options);
+            }
+        }
+    });
 }
 
 function getAllTableElements(nameTable) {
@@ -364,6 +410,7 @@ function getAllTableElements(nameTable) {
 //            arrayObj = {};
 //            objects = new Array();
             Data = data;
+
             NameTable = nameTable;
             setHtml();
         }
@@ -372,12 +419,12 @@ function getAllTableElements(nameTable) {
 
 function editRow(obj) {
     $.confirm({
-        'title' : 'Edit ' + NameTable,
-        'template'  : NameTable.toLowerCase(),
-        'row' : obj.rowIndex - 2,
-        'buttons': {
-            'Change': {
-                'class': 'blue',
+        'title'        : 'Edit ' + NameTable,
+        'template'     : NameTable.toLowerCase(),
+        'row'          : obj.rowIndex - 2,
+        'buttons'      : {
+            'Change'    : {
+                'class' : 'blue',
                 'action': function () {
                     //                        elem.slideUp();
                 }
@@ -388,11 +435,12 @@ function editRow(obj) {
 
 $(document).on('click', '.plusTd', function (event) {
     $.confirm({
-        'title' : 'Add ' + NameTable,
-        'template'  : NameTable.toLowerCase(),
-        'buttons': {
-            'Add': {
-                'class': 'blue',
+        'title'         : 'Add ' + NameTable,
+        'template'      : NameTable.toLowerCase(),
+        'row'           : 0,
+        'buttons'       : {
+            'Add'       : {
+                'class' : 'blue',
                 'action': function () {
                     //                        elem.slideUp();
                 }

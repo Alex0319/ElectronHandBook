@@ -1,7 +1,7 @@
 package by.iba.electronhandbook.dao.impl;
 
 import by.iba.electronhandbook.bean.User;
-import by.iba.electronhandbook.bean.UserDto;
+import by.iba.electronhandbook.bean.dto.UserDto;
 import by.iba.electronhandbook.dao.MySqlGenericDaoImpl;
 
 import java.sql.PreparedStatement;
@@ -18,9 +18,11 @@ public class UserDaoImpl extends MySqlGenericDaoImpl<UserDto> {
     @Override
     protected User fillEntity(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setId(resultSet.getInt("USER_ID"));
-        user.setPassword(resultSet.getString("PASSWORD"));
-        user.setRole(resultSet.getString("ROLE"));
+        if(resultSet != null){
+            user.setId(resultSet.getInt("USER_ID"));
+            user.setPassword(resultSet.getString("PASSWORD"));
+            user.setRole(resultSet.getString("ROLE"));
+        }
         return user;
     }
 

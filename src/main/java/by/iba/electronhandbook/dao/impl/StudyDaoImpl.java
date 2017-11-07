@@ -19,14 +19,16 @@ public class StudyDaoImpl extends MySqlGenericDaoImpl<Study>{
     protected Study fillEntity(ResultSet resultSet) throws SQLException {
         Study study = new Study();
         Professor professor = new Professor();
-        study.setId(resultSet.getInt("STUDY_ID"));
-        study.setName(resultSet.getString("NAME"));
-        study.setHours(resultSet.getInt("HOURS"));
-        study.setAvgMark(resultSet.getDouble("STUDY_AVG_MARK"));
-        professor.setId(resultSet.getInt("PROFESSOR_ID"));
-        professor.setFirstName(resultSet.getString("FIRST_NAME"));
-        professor.setSecondName(resultSet.getString("SECOND_NAME"));
-        professor.setFatherName(resultSet.getString("FATHER_NAME"));
+        if(resultSet != null){
+            study.setId(resultSet.getInt("STUDY_ID"));
+            study.setName(resultSet.getString("NAME"));
+            study.setHours(resultSet.getInt("HOURS"));
+            study.setAvgMark(resultSet.getDouble("STUDY_AVG_MARK"));
+            professor.setId(resultSet.getInt("PROFESSOR_ID"));
+            professor.setFirstName(resultSet.getString("FIRST_NAME"));
+            professor.setSecondName(resultSet.getString("SECOND_NAME"));
+            professor.setFatherName(resultSet.getString("FATHER_NAME"));
+        }
         study.setProfessor(professor);
         return study;
     }

@@ -1,13 +1,16 @@
 package by.iba.electronhandbook.service.impl;
 
 import by.iba.electronhandbook.bean.Professor;
+import by.iba.electronhandbook.bean.dto.ProfessorDto;
 import by.iba.electronhandbook.dao.impl.ProfessorDaoImpl;
 import by.iba.electronhandbook.exception.ServiceException;
 import by.iba.electronhandbook.service.AbstractService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class ProfessorServiceImpl extends AbstractService<Professor> {
@@ -44,5 +47,21 @@ public class ProfessorServiceImpl extends AbstractService<Professor> {
             throw new ServiceException(e);
         }
         return professor;
+    }
+
+    @Override
+    public List<?> getAllDto() throws ServiceException {
+        List<Professor> professors = getAll();
+        List<ProfessorDto> professorDtos = new ArrayList<>();
+
+        for(Professor professor: professors){
+            ProfessorDto professorDto = new ProfessorDto();
+            professorDto.setId(professor.getId());
+            professorDto.setFirstName(professor.getFirstName());
+            professorDto.setSecondName(professor.getSecondName());
+            professorDto.setFatherName(professor.getFatherName());
+            professorDtos.add(professorDto);
+        }
+        return professorDtos;
     }
 }

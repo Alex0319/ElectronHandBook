@@ -1,7 +1,7 @@
 package by.iba.electronhandbook.service.impl;
 
 import by.iba.electronhandbook.bean.User;
-import by.iba.electronhandbook.bean.UserDto;
+import by.iba.electronhandbook.bean.dto.UserDto;
 import by.iba.electronhandbook.dao.impl.UserDaoImpl;
 import by.iba.electronhandbook.exception.ServiceException;
 import by.iba.electronhandbook.service.AbstractService;
@@ -27,6 +27,11 @@ public class UserServiceImpl extends AbstractService<UserDto>{
             userDtos.add(userDto);
         }
         return userDtos;
+    }
+
+    @Override
+    public List<UserDto> getAllDto() throws ServiceException {
+        return getAll();
     }
 
     @Override

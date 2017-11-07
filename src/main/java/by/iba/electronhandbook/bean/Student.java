@@ -1,26 +1,10 @@
 package by.iba.electronhandbook.bean;
 
-public class Student extends AbstractEntity {
-    private String firstName;
-    private String secondName;
+import by.iba.electronhandbook.bean.dto.StudentDto;
+
+public class Student extends StudentDto {
     private Double avgMark;
     private Group group;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
 
     public double getAvgMark() {
         return avgMark;
@@ -46,16 +30,13 @@ public class Student extends AbstractEntity {
         if (!(o instanceof Student)){
             return false;
         }
+        if (!super.equals(o)){
+            return false;
+        }
 
         Student student = (Student) o;
 
-        if (Double.compare(student.avgMark, avgMark) != 0){
-            return false;
-        }
-        if (firstName != null ? !firstName.equals(student.firstName) : student.firstName != null){
-            return false;
-        }
-        if (secondName != null ? !secondName.equals(student.secondName) : student.secondName != null){
+        if (avgMark != null ? !avgMark.equals(student.avgMark) : student.avgMark != null){
             return false;
         }
         return group != null ? group.equals(student.group) : student.group == null;
@@ -63,12 +44,8 @@ public class Student extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
-        temp = Double.doubleToLongBits(avgMark);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        int result = super.hashCode();
+        result = 31 * result + (avgMark != null ? avgMark.hashCode() : 0);
         result = 31 * result + (group != null ? group.hashCode() : 0);
         return result;
     }

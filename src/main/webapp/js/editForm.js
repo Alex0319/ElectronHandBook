@@ -35,6 +35,7 @@
             if (status !== "error" && typeof params.row !== 'undefined') {
                 fillForm(params.row);
             }
+            loadRequiredData(params.row);
         });
 
         var buttons = $('#updateAddBox .button'),

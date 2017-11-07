@@ -1,18 +1,11 @@
 package by.iba.electronhandbook.bean;
 
-public class Study extends AbstractEntity{
-    private String name;
+import by.iba.electronhandbook.bean.dto.StudyDto;
+
+public class Study extends StudyDto {
     private Integer hours;
     private Professor professor;
     private Double avgMark;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getHours() {
         return hours;
@@ -40,36 +33,33 @@ public class Study extends AbstractEntity{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this == o){
             return true;
         }
         if (!(o instanceof Study)) {
             return false;
         }
+        if (!super.equals(o)){
+            return false;
+        }
 
         Study study = (Study) o;
 
-        if (hours != study.hours){
+        if (hours != null ? !hours.equals(study.hours) : study.hours != null){
             return false;
         }
-        if (Double.compare(study.avgMark, avgMark) != 0){
+        if (professor != null ? !professor.equals(study.professor) : study.professor != null){
             return false;
         }
-        if (name != null ? !name.equals(study.name) : study.name != null){
-            return false;
-        }
-        return professor != null ? professor.equals(study.professor) : study.professor == null;
+        return avgMark != null ? avgMark.equals(study.avgMark) : study.avgMark == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = name != null ? name.hashCode() : 0;
-        result = 31 * result + hours;
+        int result = super.hashCode();
+        result = 31 * result + (hours != null ? hours.hashCode() : 0);
         result = 31 * result + (professor != null ? professor.hashCode() : 0);
-        temp = Double.doubleToLongBits(avgMark);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (avgMark != null ? avgMark.hashCode() : 0);
         return result;
     }
 }

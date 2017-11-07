@@ -11,6 +11,7 @@ import by.iba.electronhandbook.service.AbstractService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class MarkServiceImpl extends AbstractService<Mark>{
@@ -56,5 +57,10 @@ public class MarkServiceImpl extends AbstractService<Mark>{
             throw new ServiceException(e);
         }
         return mark;
+    }
+
+    @Override
+    public List<Mark> getAllDto() throws ServiceException {
+        return getAll();
     }
 }

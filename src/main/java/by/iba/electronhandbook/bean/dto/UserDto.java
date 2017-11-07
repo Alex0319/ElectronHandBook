@@ -1,6 +1,8 @@
-package by.iba.electronhandbook.bean;
+package by.iba.electronhandbook.bean.dto;
 
-public class UserDto extends AbstractEntity{
+import by.iba.electronhandbook.bean.AbstractEntity;
+
+public class UserDto extends AbstractEntity {
     protected String role;
 
     public String getRole() {

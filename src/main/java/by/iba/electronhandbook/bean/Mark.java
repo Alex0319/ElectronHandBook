@@ -7,7 +7,7 @@ public class Mark extends AbstractEntity {
     private Student student;
     private Date date;
     private Professor professor;
-    private int mark;
+    private Integer mark;
     private String comments;
 
     public Date getDate() {

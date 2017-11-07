@@ -19,11 +19,13 @@ public class StudentDaoImpl extends MySqlGenericDaoImpl<Student> {
     protected Student fillEntity(ResultSet resultSet) throws SQLException {
         Student student = new Student();
         Group group = new Group();
-        student.setId(resultSet.getInt("ID"));
-        student.setFirstName(resultSet.getString("FIRST_NAME"));
-        student.setSecondName(resultSet.getString("SECOND_NAME"));
-        student.setAvgMark(resultSet.getDouble("AVG_MARK"));
-        group.setId(resultSet.getInt("GROUP_NUMBER"));
+        if(resultSet != null){
+            student.setId(resultSet.getInt("ID"));
+            student.setFirstName(resultSet.getString("FIRST_NAME"));
+            student.setSecondName(resultSet.getString("SECOND_NAME"));
+            student.setAvgMark(resultSet.getDouble("AVG_MARK"));
+            group.setId(resultSet.getInt("GROUP_NUMBER"));
+        }
         student.setGroup(group);
         return student;
     }

@@ -2,10 +2,13 @@ package by.iba.electronhandbook.service.impl;
 
 import by.iba.electronhandbook.bean.Group;
 import by.iba.electronhandbook.bean.Student;
+import by.iba.electronhandbook.bean.dto.StudentDto;
 import by.iba.electronhandbook.dao.impl.StudentDaoImpl;
 import by.iba.electronhandbook.exception.ServiceException;
 import by.iba.electronhandbook.service.AbstractService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class StudentServiceImpl extends AbstractService<Student>{
@@ -37,5 +40,20 @@ public class StudentServiceImpl extends AbstractService<Student>{
             id = Integer.parseInt(params.get("PREV_ID")[0]);
         }
         return student;
+    }
+
+    @Override
+    public List<StudentDto> getAllDto() throws ServiceException {
+        List<Student> students = getAll();
+        List<StudentDto> studentDtos = new ArrayList<>();
+
+        for(Student  student: students){
+            StudentDto studentDto = new StudentDto();
+            studentDto.setId(student.getId());
+            studentDto.setFirstName(student.getFirstName());
+            studentDto.setSecondName(student.getSecondName());
+            studentDtos.add(studentDto);
+        }
+        return studentDtos;
     }
 }

@@ -1,6 +1,8 @@
 package by.iba.electronhandbook.bean;
 
-public class User extends UserDto{
+import by.iba.electronhandbook.bean.dto.UserDto;
+
+public class User extends UserDto {
     private String password;
 
     public String getPassword() {

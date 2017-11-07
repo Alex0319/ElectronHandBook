@@ -7,7 +7,7 @@ public class Group extends AbstractEntity{
         return avgMark;
     }
 
-    public void setAvgMark(double avgMark) {
+    public void setAvgMark(Double avgMark) {
         this.avgMark = avgMark;
     }
 

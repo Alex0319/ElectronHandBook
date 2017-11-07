@@ -12,4 +12,5 @@ public interface GenericService<T extends AbstractEntity> {
     void delete(Map<String, String[]> params) throws ServiceException;
     void update(Map<String, String[]> params) throws ServiceException;
     T getById(Map<String, String[]> params) throws ServiceException;
+    List<?> getAllDto() throws ServiceException;
 }

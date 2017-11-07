@@ -18,12 +18,14 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor>{
     @Override
     protected Professor fillEntity(ResultSet resultSet) throws SQLException {
         Professor professor = new Professor();
-        professor.setId(resultSet.getInt("ID"));
-        professor.setFirstName(resultSet.getString("FIRST_NAME"));
-        professor.setSecondName(resultSet.getString("SECOND_NAME"));
-        professor.setFatherName(resultSet.getString("FATHER_NAME"));
-        professor.setBirthDate(resultSet.getDate("BIRTH_DATE"));
-        professor.setAvgMark(resultSet.getDouble("AVG_MARK"));
+        if(resultSet != null){
+            professor.setId(resultSet.getInt("ID"));
+            professor.setFirstName(resultSet.getString("FIRST_NAME"));
+            professor.setSecondName(resultSet.getString("SECOND_NAME"));
+            professor.setFatherName(resultSet.getString("FATHER_NAME"));
+            professor.setBirthDate(resultSet.getDate("BIRTH_DATE"));
+            professor.setAvgMark(resultSet.getDouble("AVG_MARK"));
+        }
         return professor;
     }
 

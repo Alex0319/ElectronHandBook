@@ -19,6 +19,7 @@ public final class CommandMapper implements CommandFactory {
         commands.put("AUTHORIZATION", new AuthorizationCommand());
         commands.put("REGISTRATION", new RegistrationCommand());
         commands.put("ADMIN", new AdminCommand());
+        commands.put("GET_REQUIRED_DATA", new GetRequiredDataCommand());
     }
 
     private static class Holder{

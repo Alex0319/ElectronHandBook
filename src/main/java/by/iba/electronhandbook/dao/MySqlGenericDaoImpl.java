@@ -35,12 +35,14 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
             while (resultSet.next()){
                 entities.add(fillEntity(resultSet));
             }
+            if(entities.size() == 0){
+                entities.add(fillEntity(null));
+            }
         }catch (SQLException e){
             throw new DaoException(e);
         }finally {
             closeConnection(connection, statement);
         }
-
         return entities;
     }
 

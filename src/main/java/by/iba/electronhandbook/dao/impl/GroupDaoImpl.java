@@ -17,8 +17,10 @@ public class GroupDaoImpl extends MySqlGenericDaoImpl<Group>{
     @Override
     protected Group fillEntity(ResultSet resultSet) throws SQLException {
         Group group = new Group();
-        group.setId(resultSet.getInt("GROUP_NUMBER"));
-        group.setAvgMark(resultSet.getDouble("AVG_MARK"));
+        if(resultSet != null) {
+            group.setId(resultSet.getInt("GROUP_NUMBER"));
+            group.setAvgMark(resultSet.getDouble("AVG_MARK"));
+        }
         return group;
     }
 
