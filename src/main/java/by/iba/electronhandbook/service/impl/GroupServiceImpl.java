@@ -16,14 +16,14 @@ public class GroupServiceImpl extends AbstractService<Group>{
     @Override
     protected Group buildEntity(Map<String, String[]> params) throws ServiceException {
         Group group = new Group();
-        if(params.containsKey("ID")) {
+        if(params.containsKey("id") && !params.get("id")[0].isEmpty()) {
             group.setId(Integer.parseInt(params.get("ID")[0]));
         }
-        if(params.containsKey("AVGMARK")){
-            group.setAvgMark(Double.parseDouble(params.get("MARK")[0]));
+        if(params.containsKey("avgMark")){
+            group.setAvgMark(Double.parseDouble(params.get("avgMark")[0]));
         }
-        if(params.containsKey("PREV_ID")){
-            id = Integer.parseInt(params.get("PREV_ID")[0]);
+        if(params.containsKey("prevId")){
+            id = Integer.parseInt(params.get("prevId")[0]);
         }
         return group;
     }

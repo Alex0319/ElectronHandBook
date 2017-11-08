@@ -7,7 +7,6 @@ import by.iba.electronhandbook.service.GenericService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class GetAllEntitiesCommand extends AbstarctJsonCommand{
     @Override
@@ -16,8 +15,7 @@ public class GetAllEntitiesCommand extends AbstarctJsonCommand{
         GenericService<?> service = ServiceMapper.getInstance().getService(path[2]);
         try{
             if(service != null) {
-                List<?> entities = service.getAll();
-                formJsonResponse(response, entities);
+                formJsonResponse(response, service.getAll());
             }
         }catch (ServiceException e){
             throw new CommandException(e);

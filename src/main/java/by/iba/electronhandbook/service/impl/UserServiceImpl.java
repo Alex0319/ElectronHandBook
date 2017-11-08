@@ -37,14 +37,14 @@ public class UserServiceImpl extends AbstractService<UserDto>{
     @Override
     protected User buildEntity(Map<String, String[]> params) throws ServiceException {
         User user = new User();
-        if(params.containsKey("ID")) {
-            user.setId(Integer.parseInt(params.get("ID")[0]));
+        if(params.containsKey("id")     && !params.get("id")[0].isEmpty()) {
+            user.setId(Integer.parseInt(params.get("id")[0]));
         }
-        if(params.containsKey("ROLE")){
-            user.setId(Integer.parseInt(params.get("ROLE")[0]));
+        if(params.containsKey("role")){
+            user.setRole(params.get("role")[0]);
         }
-        if(params.containsKey("PREV_ID")){
-            id = Integer.parseInt(params.get("PREV_ID")[0]);
+        if(params.containsKey("prevId")){
+            id = Integer.parseInt(params.get("prevId")[0]);
         }
         return user;
     }

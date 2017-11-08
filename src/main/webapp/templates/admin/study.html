@@ -1,0 +1,27 @@
+<form class="updateOrAddForm" action="" method="post" name="updateOrAddForm">
+    <ul>
+        <li>
+            <label for="id">Id:</label>
+            <input type="text" name="id" id="id" readonly/>
+        </li>
+        <li>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" placeholder="Math" minlength="2" maxlength="50" required  autocomplete="off"/>
+            <span class="formHint">Name could contain from 2 to 50 chars</span>
+        </li>
+        <li>
+            <label for="hours">Hours:</label>
+            <input type="number" name="hours" id="hours" placeholder="100" min="1" max="500" required autocomplete="off"/>
+            <span class="formHint">Hours could be from 1 to 500</span>
+        </li>
+        <li>
+            <label for="professor">Professor:</label>
+            <select name="professor" id="professor"></select>
+        </li>
+        <li>
+            <label for="avgMark">Average mark:</label>
+            <input type="text" name="avgMark" id="avgMark" placeholder="8.7" minlength="1" maxlength="5" required autocomplete="off"/>
+            <span class="formHint">Average mark could be 0 to 10</span>
+        </li>
+    </ul>
+</form>

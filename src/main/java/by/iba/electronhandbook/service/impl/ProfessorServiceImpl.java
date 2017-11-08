@@ -22,26 +22,26 @@ public class ProfessorServiceImpl extends AbstractService<Professor> {
     protected Professor buildEntity(Map<String, String[]> params) throws ServiceException {
         Professor professor = new Professor();
         try {
-            if(params.containsKey("ID")) {
-                professor.setId(Integer.parseInt(params.get("ID")[0]));
+            if(params.containsKey("id") && !params.get("id")[0].isEmpty()) {
+                professor.setId(Integer.parseInt(params.get("id")[0]));
             }
-            if(params.containsKey("FIRSTNAME")){
-                professor.setFirstName(params.get("FIRSTNAME")[0]);
+            if(params.containsKey("firstName")){
+                professor.setFirstName(params.get("firstName")[0]);
             }
-            if(params.containsKey("SECONDNAME")){
-                professor.setSecondName(params.get("SECONDNAME")[0]);
+            if(params.containsKey("secondName")){
+                professor.setSecondName(params.get("secondName")[0]);
             }
-            if(params.containsKey("FATHERNAME")){
-                professor.setFatherName(params.get("FATHERNAME")[0]);
+            if(params.containsKey("fatherName")){
+                professor.setFatherName(params.get("fatherName")[0]);
             }
-            if(params.containsKey("BIRTHDATE")){
-                professor.setBirthDate(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("BIRTHDATE")[0]).getTime()));
+            if(params.containsKey("birthDate")){
+                professor.setBirthDate(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("birthDate")[0]).getTime()));
             }
-            if(params.containsKey("AVGMARK")){
-                professor.setAvgMark(Double.parseDouble(params.get("FATHERNAME")[0])    );
+            if(params.containsKey("avgMark")){
+                professor.setAvgMark(Double.parseDouble(params.get("avgMark")[0])    );
             }
-            if(params.containsKey("PREV_ID")){
-                id = Integer.parseInt(params.get("PREV_ID")[0]);
+            if(params.containsKey("prevId")){
+                id = Integer.parseInt(params.get("prevId")[0]);
             }
         } catch (ParseException e) {
             throw new ServiceException(e);

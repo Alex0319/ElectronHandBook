@@ -36,5 +36,8 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor>{
         statement.setString(3, entity.getFatherName());
         statement.setDate(4, new Date(entity.getBirthDate().getTime()));
         statement.setDouble(5, entity.getAvgMark());
+        if(statement.getParameterMetaData().getParameterCount() > 5){
+            statement.setInt(6, entity.getId());
+        }
     }
 }

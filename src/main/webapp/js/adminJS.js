@@ -134,71 +134,6 @@ function updateData(obj) {
             i++;
         }
     }
-}
-
-function clearInputs(editBody) {
-    $(editBody).each(function(){
-        $("div",this).each(function() {
-            $(this.firstElementChild).val(null);
-        });
-    });
-}
-
-function getData(editBody) {
-    var result = '';
-    $(editBody).each(function(){
-        $("div",this).each(function() {
-            if(this.className=='col-sm-8') {
-                var key = $(this.firstElementChild).attr('name');
-                var value = $(this.firstElementChild).val();
-                if(key == 'id' && value == ''){
-                    value ="0";
-                }else{
-                    if($(this.firstElementChild).get(0).tagName == 'SELECT'){
-                        value = value.substr(0,value.indexOf(' '))
-                    }
-                }
-                result = result.concat('&',key,'=', value);
-            }
-        });
-    });
-    return result;
-}
-
-function getUpdatedData() {
-    $('#myModalUpdate').find('.modal-footer > .btn').click();
-    getAllTableElements(NameTable);
-}
-
-function sendUpdateData() {
-    var editBodyUpdate = $('#myModalUpdate').find('#mainForm');
-
-    $.ajax({
-        type: 'POST',
-        url: '/update?tableName='+NameTable + getData(editBodyUpdate),
-        success: function (result) {
-            if(result != null && result.length !=0){
-                alert(result);
-            }
-        }});
-}
-
-function sendAddData() {
-    var editBodyAdd = $('#myModalAdd').find('#mainForm');
-
-    $.ajax({
-        type: 'POST',
-        url: '/add?tableName='+NameTable + getData(editBodyAdd),
-        success: function (result) {
-            console.log(result);
-            if(typeof result == 'string'){
-                alert(result);
-            }else {
-                Data = result;
-                $('#myModalAdd').find('.modal-footer > .btn').click();
-                setHtml();
-            }
-        }});
 }*/
 
 var NameTable = "";
@@ -217,13 +152,13 @@ var oldTarget;
 function deleteRow(obj) {
     $.ajax({
         type: 'DELETE',
-        url: '/main/delete/' + NameTable + '?' + $.param({"ID": obj.id}),
+        url: '/main/delete/' + NameTable + '?' + $.param({"id": obj.id}),
         success:function(result){
-            if(result==null || result.length == 0){
+            if(typeof result == 'string'){
+                alert(result);
+            }else {
                 Data.splice(obj.rowIndex - 2,1);
                 $(obj).remove();
-            }else {
-                alert(result);
             }
         }
     });
@@ -291,6 +226,21 @@ function addData() {
     clearInputs(editBodyAdd);
     ($(editBodyAdd[0].lastElementChild).find("button")[0]).addEventListener("click",sendAddData);
 }*/
+
+function getData() {
+    var inputs = $('.updateOrAddForm').find('input,select');
+    var result={};
+    for (var i = 0; i<inputs.length; i++){
+        result[inputs[i].id] = $(inputs[i]).val();
+    }
+    return result;
+}
+
+function clearInputs() {
+    $('.updateOrAddForm').find('input,select').each(function(){
+        $(this).val(null);
+    });
+}
 
 function buildObjStr(obj) {
     var result = '';
@@ -391,14 +341,33 @@ function loadRequiredData(rowNumber) {
                     var result = '';
                     for(var value in (data[key])[i]){
                         var selected = value=='id' && (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
-                        result += ((data[key])[i])[value] + ' ';
+                        if(value == 'id')
+                            result = ((data[key])[i])[value] + ' ' + result;
+                        else
+                            result += ((data[key])[i])[value] + ' ';
                     }
-                    options += '<option value="' + result.trim() + '" '+ selected +'>' + result.trim() + '</option>';
+                    options += '<option value="' + ((data[key])[i])['id'] + '" '+ selected +'>' + result.trim() + '</option>';
                 }
                 $('#'+key).html(options);
             }
         }
     });
+}
+
+function sendData(action) {
+    var addData = getData();
+    $.ajax({
+        type: 'POST',
+        url: '/main/'+action+'/'+NameTable,
+        data: $.param(addData),
+        success: function (result) {
+            if(typeof result == 'string'){
+                alert(result);
+            }else {
+                Data = result;
+                setHtml();
+            }
+        }});
 }
 
 function getAllTableElements(nameTable) {
@@ -419,33 +388,31 @@ function getAllTableElements(nameTable) {
 
 function editRow(obj) {
     $.confirm({
-        'title'        : 'Edit ' + NameTable,
-        'template'     : NameTable.toLowerCase(),
-        'row'          : obj.rowIndex - 2,
-        'buttons'      : {
+        'title'         : 'Edit ' + NameTable,
+        'template'      : NameTable.toLowerCase(),
+        'row'           : obj.rowIndex - 2,
+        'buttons'       : {
             'Change'    : {
                 'class' : 'blue',
-                'action': function () {
-                    //                        elem.slideUp();
-                }
+                'actionParam': 'update',
+                'action': sendData
             }
         }
     });
 }
 
-$(document).on('click', '.plusTd', function (event) {
+$(document).on('click', '.plusTd', function() {
     $.confirm({
         'title'         : 'Add ' + NameTable,
         'template'      : NameTable.toLowerCase(),
+        'isAdd'         : true,
         'row'           : 0,
         'buttons'       : {
             'Add'       : {
                 'class' : 'blue',
-                'action': function () {
-                    //                        elem.slideUp();
-                }
+                'actionParam': 'add',
+                'action': sendData
             }
         }
     });
 });
-

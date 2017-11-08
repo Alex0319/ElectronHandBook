@@ -32,10 +32,14 @@
 
         $(markup).hide().appendTo('body').fadeIn();
         $('.updateAdd').load('/templates/admin/'+params.template+'.html', function( response, status, xhr ) {
-            if (status !== "error" && typeof params.row !== 'undefined') {
-                fillForm(params.row);
+            if (status !== "error") {
+                clearInputs();
+                if(!params.isAdd)
+                    fillForm(params.row);
+                else
+                    $('#id').parent().remove();
+                loadRequiredData(params.row);
             }
-            loadRequiredData(params.row);
         });
 
         var buttons = $('#updateAddBox .button'),
@@ -43,11 +47,10 @@
 
         $.each(params.buttons,function(name,obj){
             buttons.eq(i++).click(function(){
-
-                // Calling the action attribute when a
-                // click occurs, and hiding the confirm.
-
-                obj.action();
+                if(obj.actionParam)
+                    obj.action(obj.actionParam);
+                else
+                    obj.action();
                 $.confirm.hide();
                 return false;
             });

@@ -36,5 +36,8 @@ public class StudentDaoImpl extends MySqlGenericDaoImpl<Student> {
         statement.setString(2, entity.getSecondName());
         statement.setDouble(3, entity.getAvgMark());
         statement.setInt(4, entity.getGroup().getId());
+        if(statement.getParameterMetaData().getParameterCount() > 4){
+            statement.setInt(5, entity.getId());
+        }
     }
 }

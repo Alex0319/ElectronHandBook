@@ -54,6 +54,8 @@ public class MarkDaoImpl extends MySqlGenericDaoImpl<Mark>{
         statement.setInt(4, entity.getProfessor().getId());
         statement.setInt(5, entity.getMark());
         statement.setString(6, entity.getComments());
-        statement.setInt(7, entity.getId());
+        if(statement.getParameterMetaData().getParameterCount() > 6){
+            statement.setInt(7, entity.getId());
+        }
     }
 }

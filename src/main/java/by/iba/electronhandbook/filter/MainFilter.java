@@ -28,7 +28,7 @@ public class MainFilter implements Filter {
             role = "admin";
             session.setAttribute("role", role);
         }
-        if((path[1].equals("admin") || path[1].equals("getall") || path[1].equals("delete") || path[1].equals("get_required_data")) && role.equals("admin"))
+        if((path[1].equals("admin") || path[1].equals("getall") || path[1].equals("delete") || path[1].equals("get_required_data") || path[1].equals("add") || path[1].equals("update")) && role.equals("admin"))
             filterChain.doFilter(servletRequest, servletResponse);
         else
             servletRequest.getRequestDispatcher("/templates/pages/error/notFoundError.html").forward(servletRequest, servletResponse);

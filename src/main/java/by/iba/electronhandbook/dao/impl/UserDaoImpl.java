@@ -30,6 +30,9 @@ public class UserDaoImpl extends MySqlGenericDaoImpl<UserDto> {
     protected void fillStatement(PreparedStatement statement, UserDto entity) throws SQLException {
         User user = (User)entity;
         statement.setString(1, user.getPassword());
-        statement.setString(2, entity.getRole());
+        statement.setString(2, user.getRole());
+        if(statement.getParameterMetaData().getParameterCount() > 2){
+            statement.setInt(3, user.getId());
+        }
     }
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 
 public abstract class AbstractService<T extends AbstractEntity> implements GenericService<T> {
     private GenericDao<T> genericDao;
-    protected T entity;
+    private T entity;
     protected int id;
 
     public AbstractService(GenericDao<T> genericDao){
@@ -27,39 +27,42 @@ public abstract class AbstractService<T extends AbstractEntity> implements Gener
     }
 
     @Override
-    public void add(Map<String, String[]> params) throws ServiceException {
+    public List<T> add(Map<String, String[]> params) throws ServiceException {
         try {
             genericDao.add(buildEntity(params));
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+        return getAll();
     }
 
     @Override
-    public void delete(Map<String, String[]> params) throws ServiceException {
+    public boolean delete(Map<String, String[]> params) throws ServiceException {
         try {
             entity = buildEntity(params);
             genericDao.delete(entity.getId());
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+        return true;
     }
 
     @Override
-    public void update(Map<String, String[]> params) throws ServiceException {
+    public List<T> update(Map<String, String[]> params) throws ServiceException {
         try {
             entity = buildEntity(params);
             genericDao.update(id, entity);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+        return getAll();
     }
 
     @Override
     public T getById(Map<String, String[]> params) throws ServiceException {
         try {
-             buildEntity(params);
-            return genericDao.getById(id);
+            entity = buildEntity(params);
+            return genericDao.getById(entity.getId());
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -39,5 +39,8 @@ public class StudyDaoImpl extends MySqlGenericDaoImpl<Study>{
         statement.setInt(2, entity.getHours());
         statement.setInt(3, entity.getProfessor().getId());
         statement.setDouble(4, entity.getAvgMark());
+        if(statement.getParameterMetaData().getParameterCount() > 4){
+            statement.setInt(5, entity.getId());
+        }
     }
 }

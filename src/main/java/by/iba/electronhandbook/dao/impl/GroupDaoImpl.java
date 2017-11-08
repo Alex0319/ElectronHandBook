@@ -27,5 +27,8 @@ public class GroupDaoImpl extends MySqlGenericDaoImpl<Group>{
     @Override
     protected void fillStatement(PreparedStatement statement, Group entity) throws SQLException {
         statement.setDouble(1, entity.getAvgMark());
+        if(statement.getParameterMetaData().getParameterCount() > 1){
+            statement.setInt(2, entity.getId());
+        }
     }
 }

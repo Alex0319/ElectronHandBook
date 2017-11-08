@@ -23,35 +23,35 @@ public class MarkServiceImpl extends AbstractService<Mark>{
     protected Mark buildEntity(Map<String, String[]> params) throws ServiceException {
         Mark mark = new Mark();
         try {
-            if(params.containsKey("ID")) {
-                mark.setId(Integer.parseInt(params.get("ID")[0]));
+            if(params.containsKey("id") && !params.get("id")[0].isEmpty()) {
+                mark.setId(Integer.parseInt(params.get("id")[0]));
             }
-            if(params.containsKey("DATE")){
-                mark.setDate(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("DATE")[0]).getTime()));
+            if(params.containsKey("date")){
+                mark.setDate(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("date")[0]).getTime()));
             }
-            if(params.containsKey("MARK")) {
-                mark.setMark(Integer.parseInt(params.get("AVGMARK")[0]));
+            if(params.containsKey("mark")) {
+                mark.setMark(Integer.parseInt(params.get("mark")[0]));
             }
-            if(params.containsKey("COMMENTS")){
-                mark.setComments(params.get("COMMENTS")[0]);
+            if(params.containsKey("comments")){
+                mark.setComments(params.get("comments")[0]);
             }
-            if(params.containsKey("STUDY")){
+            if(params.containsKey("study")){
                 Study study = new Study();
-                study.setId(Integer.parseInt(params.get("STUDY")[0]));
+                study.setId(Integer.parseInt(params.get("study")[0]));
                 mark.setStudy(study);
             }
-            if(params.containsKey("STUDENT")){
+            if(params.containsKey("student")){
                 Student student = new Student();
-                student.setId(Integer.parseInt(params.get("STUDENT")[0]));
+                student.setId(Integer.parseInt(params.get("student")[0]));
                 mark.setStudent(student);
             }
-            if(params.containsKey("PROFESSOR")){
+            if(params.containsKey("professor")){
                 Professor professor = new Professor();
-                professor.setId(Integer.parseInt(params.get("PROFESSOR")[0]));
+                professor.setId(Integer.parseInt(params.get("professor")[0]));
                 mark.setProfessor(professor);
             }
-            if(params.containsKey("PREV_ID")){
-                id = Integer.parseInt(params.get("PREV_ID")[0]);
+            if(params.containsKey("prevId")){
+                id = Integer.parseInt(params.get("prevId")[0]);
             }
         }catch (ParseException e){
             throw new ServiceException(e);

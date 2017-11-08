@@ -19,25 +19,25 @@ public class StudyServiceImpl extends AbstractService<Study>{
     @Override
     protected Study buildEntity(Map<String, String[]> params) throws ServiceException {
         Study study = new Study();
-        if(params.containsKey("ID")) {
-            study.setId(Integer.parseInt(params.get("ID")[0]));
+        if(params.containsKey("id") && !params.get("id")[0].isEmpty()) {
+            study.setId(Integer.parseInt(params.get("id")[0]));
         }
-        if(params.containsKey("NAME")){
-            study.setName(params.get("NAME")[0]);
+        if(params.containsKey("name")){
+            study.setName(params.get("name")[0]);
         }
-        if(params.containsKey("HOURS")){
-            study.setHours(Integer.parseInt(params.get("NAME")[0]));
+        if(params.containsKey("hours")){
+            study.setHours(Integer.parseInt(params.get("hours")[0]));
         }
-        if(params.containsKey("AVGMARK")){
-            study.setAvgMark(Double.parseDouble(params.get("AVGMARK")[0]));
+        if(params.containsKey("avgMark")){
+            study.setAvgMark(Double.parseDouble(params.get("avgMark")[0]));
         }
-        if(params.containsKey("PROFESSOR")){
+        if(params.containsKey("professor")){
             Professor professor = new Professor();
-            professor.setId(Integer.parseInt(params.get("PROFESSOR")[0]));
+            professor.setId(Integer.parseInt(params.get("professor")[0]));
             study.setProfessor(professor);
         }
-        if(params.containsKey("PREV_ID")){
-            id = Integer.parseInt(params.get("PREV_ID")[0]);
+        if(params.containsKey("prevId")){
+            id = Integer.parseInt(params.get("prevId")[0]);
         }
         return study;
     }

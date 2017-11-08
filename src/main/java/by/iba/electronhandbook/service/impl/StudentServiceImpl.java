@@ -19,25 +19,25 @@ public class StudentServiceImpl extends AbstractService<Student>{
     @Override
     protected Student buildEntity(Map<String, String[]> params) throws ServiceException {
         Student student = new Student();
-        if(params.containsKey("ID")) {
-            student.setId(Integer.parseInt(params.get("ID")[0]));
+        if(params.containsKey("id") && !params.get("id")[0].isEmpty()) {
+            student.setId(Integer.parseInt(params.get("id")[0]));
         }
-        if(params.containsKey("GROUP")){
+        if(params.containsKey("group")){
             Group group = new Group();
-            group.setId(Integer.parseInt(params.get("GROUP")[0]));
+            group.setId(Integer.parseInt(params.get("group")[0]));
             student.setGroup(group);
         }
-        if(params.containsKey("AVGMARK")) {
-            student.setAvgMark(Double.parseDouble(params.get("AVGMARK")[0]));
+        if(params.containsKey("avgMark")) {
+            student.setAvgMark(Double.parseDouble(params.get("avgMark")[0]));
         }
-        if(params.containsKey("FIRSTNAME")){
-            student.setFirstName(params.get("FIRSTNAME")[0]);
+        if(params.containsKey("firstName")){
+            student.setFirstName(params.get("firstName")[0]);
         }
-        if(params.containsKey("SECONDNAME")){
-            student.setSecondName(params.get("SECONDNAME")[0]);
+        if(params.containsKey("secondName")){
+            student.setSecondName(params.get("secondName")[0]);
         }
-        if(params.containsKey("PREV_ID")){
-            id = Integer.parseInt(params.get("PREV_ID")[0]);
+        if(params.containsKey("prevId")){
+            id = Integer.parseInt(params.get("prevId")[0]);
         }
         return student;
     }
