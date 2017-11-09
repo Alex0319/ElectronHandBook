@@ -48,7 +48,7 @@ public final class Constants {
             "LEFT OUTER JOIN `db_handbook`.`professors`" +
             "ON `marks`.`PROFESSOR_ID` = `professors`.`ID`)";
     public static final String ADD_MARK = "INSERT INTO `db_handbook`.`marks` (`STUDY_ID`, `STUDENT_ID`, `DATE`, `PROFESSOR_ID`, `MARK`, `COMMENTS`) VALUES (?,?,?,?,?,?)";
-    public static final String DELETE_MARK = "DELETE FROM `db_handbook`.`studies` WHERE `studies`.`ID`=?";
+    public static final String DELETE_MARK = "DELETE FROM `db_handbook`.`marks` WHERE `marks`.`ID`=?";
     public static final String UPDATE_MARK = "UPDATE `db_handbook`.`marks` SET `STUDY_ID`=?, `STUDENT_ID`=?, `DATE`=?,`PROFESSOR_ID`=?, `MARK`=?, `COMMENTS`=? WHERE `ID`=?";
     public static final String GET_MARK = GET_ALL_MARKS.concat(" WHERE `ID`=?");
 }

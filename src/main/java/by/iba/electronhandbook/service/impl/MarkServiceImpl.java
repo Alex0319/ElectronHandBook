@@ -10,7 +10,6 @@ import by.iba.electronhandbook.service.AbstractService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public class MarkServiceImpl extends AbstractService<Mark>{
                 mark.setId(Integer.parseInt(params.get("id")[0]));
             }
             if(params.containsKey("date")){
-                mark.setDate(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("date")[0]).getTime()));
+                mark.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("date")[0]));
             }
             if(params.containsKey("mark")) {
                 mark.setMark(Integer.parseInt(params.get("mark")[0]));

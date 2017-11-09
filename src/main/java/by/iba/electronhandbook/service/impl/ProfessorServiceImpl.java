@@ -9,7 +9,6 @@ import by.iba.electronhandbook.service.AbstractService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public class ProfessorServiceImpl extends AbstractService<Professor> {
                 professor.setFatherName(params.get("fatherName")[0]);
             }
             if(params.containsKey("birthDate")){
-                professor.setBirthDate(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("birthDate")[0]).getTime()));
+                professor.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("birthDate")[0]));
             }
             if(params.containsKey("avgMark")){
                 professor.setAvgMark(Double.parseDouble(params.get("avgMark")[0])    );

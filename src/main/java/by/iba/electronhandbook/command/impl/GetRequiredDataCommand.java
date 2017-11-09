@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GetRequiredDataCommand extends AbstarctJsonCommand{
+public class GetRequiredDataCommand extends AbstractJsonCommand {
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
+    public boolean execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
         Map<String, String[]> params = req.getParameterMap();
         Map<String, List<?>> result = new HashMap<>();
         try{
@@ -29,5 +29,6 @@ public class GetRequiredDataCommand extends AbstarctJsonCommand{
         }catch (ServiceException e){
             throw new CommandException(e);
         }
+        return true;
     }
 }

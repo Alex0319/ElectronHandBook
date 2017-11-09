@@ -338,11 +338,12 @@ function loadRequiredData(rowNumber) {
             for(var key in data){
                 var options = '';
                 for(var i = 0; i < data[key].length; i++){
-                    var result = '';
+                    var result = '', selected = '';
                     for(var value in (data[key])[i]){
-                        var selected = value=='id' && (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
-                        if(value == 'id')
+                        if(value == 'id'){
                             result = ((data[key])[i])[value] + ' ' + result;
+                            selected = value=='id' && (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
+                        }
                         else
                             result += ((data[key])[i])[value] + ' ';
                     }

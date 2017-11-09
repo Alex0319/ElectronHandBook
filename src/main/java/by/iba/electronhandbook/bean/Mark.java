@@ -18,7 +18,7 @@ public class Mark extends AbstractEntity {
         this.date = date;
     }
 
-    public int getMark() {
+    public Integer getMark() {
         return mark;
     }
 

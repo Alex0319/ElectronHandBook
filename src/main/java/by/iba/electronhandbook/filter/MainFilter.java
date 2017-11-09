@@ -24,14 +24,19 @@ public class MainFilter implements Filter {
         HttpSession session = req.getSession(true);
         String[] path = req.getPathInfo().split("/");
         String role = (String) session.getAttribute("role");
-        if(role == null){
+        if (role == null) {
             role = "admin";
             session.setAttribute("role", role);
         }
-        if((path[1].equals("admin") || path[1].equals("getall") || path[1].equals("delete") || path[1].equals("get_required_data") || path[1].equals("add") || path[1].equals("update")) && role.equals("admin"))
-            filterChain.doFilter(servletRequest, servletResponse);
-        else
-            servletRequest.getRequestDispatcher("/templates/pages/error/notFoundError.html").forward(servletRequest, servletResponse);
+        if (path.length > 1){
+            if ((path[1].equals("admin") || path[1].equals("getall") || path[1].equals("delete") || path[1].equals("get_required_data") || path[1].equals("add") || path[1].equals("update")) && role.equals("admin")){
+                filterChain.doFilter(servletRequest, servletResponse);
+            }else{
+                servletRequest.getRequestDispatcher("/templates/pages/error/notFoundError.html").forward(servletRequest, servletResponse);
+            }
+        }else {
+            servletRequest.getRequestDispatcher("/templates/pages/error/serverError.html").forward(servletRequest, servletResponse);
+        }
     }
 
     @Override

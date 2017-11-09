@@ -21,9 +21,11 @@ public class MainServlet extends HttpServlet{
         try{
             String[] path = req.getPathInfo().split("/");
             Command command = CommandMapper.getInstance().getCommand(path[1]);
-            if(command != null){
-                command.execute(req, resp);
-            }else{
+            if (command != null) {
+                if(!command.execute(req, resp)){
+                    req.getRequestDispatcher("/templates/pages/error/serverError.html").forward(req, resp);
+                }
+            } else {
                 req.getRequestDispatcher("/templates/pages/error/notFoundError.html").forward(req, resp);
             }
         }catch (CommandException | ServletException | IOException e){

@@ -16,7 +16,7 @@ public class Professor extends ProfessorDto {
         this.birthDate = birthDate;
     }
 
-    public double getAvgMark() {
+    public Double getAvgMark() {
         return avgMark;
     }
 

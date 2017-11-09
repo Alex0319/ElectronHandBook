@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AdminCommand implements Command{
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
+    public boolean execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
         try{
             AdminService adminService = new AdminServiceImpl();
             adminService.redirectToMainAdminPage(req, response);
         }catch (ServiceException e){
             throw new CommandException(e);
         }
+        return true;
     }
 }

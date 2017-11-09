@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AuthorizationCommand implements Command {
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
-
+    public boolean execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
+        return true;
     }
 }

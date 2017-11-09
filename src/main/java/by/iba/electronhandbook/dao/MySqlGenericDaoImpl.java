@@ -72,7 +72,7 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
             statement.setInt(1, id);
             statement.execute();
         }catch (SQLIntegrityConstraintViolationException e){
-//            throw new DaoException(buildMessage(room, e.getMessage()) ,e);
+            throw new DaoException(e);
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

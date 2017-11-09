@@ -7,6 +7,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import static by.iba.electronhandbook.constants.Constants.*;
 
@@ -50,7 +52,7 @@ public class MarkDaoImpl extends MySqlGenericDaoImpl<Mark>{
     protected void fillStatement(PreparedStatement statement, Mark entity) throws SQLException {
         statement.setInt(1, entity.getStudy().getId());
         statement.setInt(2, entity.getStudent().getId());
-        statement.setDate(3, new Date(entity.getDate().getTime()));
+        statement.setDate(3, new Date(entity.getDate().getTime()), Calendar.getInstance(TimeZone.getDefault()));
         statement.setInt(4, entity.getProfessor().getId());
         statement.setInt(5, entity.getMark());
         statement.setString(6, entity.getComments());

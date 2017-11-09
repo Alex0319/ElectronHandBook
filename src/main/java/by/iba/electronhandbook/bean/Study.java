@@ -7,7 +7,7 @@ public class Study extends StudyDto {
     private Professor professor;
     private Double avgMark;
 
-    public int getHours() {
+    public Integer getHours() {
         return hours;
     }
 
@@ -15,7 +15,7 @@ public class Study extends StudyDto {
         this.hours = hours;
     }
 
-    public double getAvgMark() {
+    public Double getAvgMark() {
         return avgMark;
     }
 

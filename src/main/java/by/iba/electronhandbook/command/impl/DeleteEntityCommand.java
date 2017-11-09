@@ -8,17 +8,23 @@ import by.iba.electronhandbook.service.GenericService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteEntityCommand extends AbstarctJsonCommand{
+public class DeleteEntityCommand extends AbstractJsonCommand {
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
+    public boolean execute(HttpServletRequest req, HttpServletResponse response) throws CommandException {
         String[] path = req.getPathInfo().split("/");
+        if(path.length <= 2){
+            return false;
+        }
         GenericService<?> service = ServiceMapper.getInstance().getService(path[2]);
         try{
             if(service != null) {
                 formJsonResponse(response, service.delete(req.getParameterMap()));
+            }else{
+                return false;
             }
         }catch (ServiceException e) {
             throw new CommandException(e);
         }
+        return true;
     }
 }

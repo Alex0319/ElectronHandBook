@@ -7,6 +7,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import static by.iba.electronhandbook.constants.Constants.*;
 
@@ -34,7 +36,7 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor>{
         statement.setString(1, entity.getFirstName());
         statement.setString(2, entity.getSecondName());
         statement.setString(3, entity.getFatherName());
-        statement.setDate(4, new Date(entity.getBirthDate().getTime()));
+        statement.setDate(4, new Date(entity.getBirthDate().getTime()), Calendar.getInstance(TimeZone.getDefault()));
         statement.setDouble(5, entity.getAvgMark());
         if(statement.getParameterMetaData().getParameterCount() > 5){
             statement.setInt(6, entity.getId());

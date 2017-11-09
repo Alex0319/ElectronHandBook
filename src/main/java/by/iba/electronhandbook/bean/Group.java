@@ -3,7 +3,7 @@ package by.iba.electronhandbook.bean;
 public class Group extends AbstractEntity{
     private Double avgMark;
 
-    public double getAvgMark() {
+    public Double getAvgMark() {
         return avgMark;
     }
 

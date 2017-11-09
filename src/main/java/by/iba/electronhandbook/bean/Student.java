@@ -6,7 +6,7 @@ public class Student extends StudentDto {
     private Double avgMark;
     private Group group;
 
-    public double getAvgMark() {
+    public Double getAvgMark() {
         return avgMark;
     }
 

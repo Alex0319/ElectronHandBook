@@ -17,7 +17,7 @@ public class GroupServiceImpl extends AbstractService<Group>{
     protected Group buildEntity(Map<String, String[]> params) throws ServiceException {
         Group group = new Group();
         if(params.containsKey("id") && !params.get("id")[0].isEmpty()) {
-            group.setId(Integer.parseInt(params.get("ID")[0]));
+            group.setId(Integer.parseInt(params.get("id")[0]));
         }
         if(params.containsKey("avgMark")){
             group.setAvgMark(Double.parseDouble(params.get("avgMark")[0]));
