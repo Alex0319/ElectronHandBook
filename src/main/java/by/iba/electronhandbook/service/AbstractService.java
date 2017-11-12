@@ -68,5 +68,14 @@ public abstract class AbstractService<T extends AbstractEntity> implements Gener
         }
     }
 
+    protected boolean tryParseDouble(String value){
+        try {
+            Double.parseDouble(value);
+            return true;
+        }catch (NumberFormatException e){
+            return false;
+        }
+    }
+
     protected abstract T buildEntity(Map<String, String[]> params) throws ServiceException;
 }

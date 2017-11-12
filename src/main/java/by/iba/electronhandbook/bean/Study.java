@@ -2,10 +2,12 @@ package by.iba.electronhandbook.bean;
 
 import by.iba.electronhandbook.bean.dto.StudyDto;
 
+import java.util.Set;
+
 public class Study extends StudyDto {
     private Integer hours;
-    private Professor professor;
     private Double avgMark;
+    private Set<Professor> professors;
 
     public Integer getHours() {
         return hours;
@@ -23,12 +25,12 @@ public class Study extends StudyDto {
         this.avgMark = avgMark;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public Set<Professor> getProfessors() {
+        return professors;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setProfessors(Set<Professor> professors) {
+        this.professors = professors;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class Study extends StudyDto {
         if (this == o){
             return true;
         }
-        if (!(o instanceof Study)) {
+        if (!(o instanceof Study)){
             return false;
         }
         if (!super.equals(o)){
@@ -48,18 +50,18 @@ public class Study extends StudyDto {
         if (hours != null ? !hours.equals(study.hours) : study.hours != null){
             return false;
         }
-        if (professor != null ? !professor.equals(study.professor) : study.professor != null){
+        if (avgMark != null ? !avgMark.equals(study.avgMark) : study.avgMark != null){
             return false;
         }
-        return avgMark != null ? avgMark.equals(study.avgMark) : study.avgMark == null;
+        return professors != null ? professors.equals(study.professors) : study.professors == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (hours != null ? hours.hashCode() : 0);
-        result = 31 * result + (professor != null ? professor.hashCode() : 0);
         result = 31 * result + (avgMark != null ? avgMark.hashCode() : 0);
+        result = 31 * result + (professors != null ? professors.hashCode() : 0);
         return result;
     }
 }

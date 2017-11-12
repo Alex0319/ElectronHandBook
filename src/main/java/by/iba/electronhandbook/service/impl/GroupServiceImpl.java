@@ -20,7 +20,11 @@ public class GroupServiceImpl extends AbstractService<Group>{
             group.setId(Integer.parseInt(params.get("id")[0]));
         }
         if(params.containsKey("avgMark")){
-            group.setAvgMark(Double.parseDouble(params.get("avgMark")[0]));
+            if(params.get("avgMark")[0].isEmpty()){
+                group.setAvgMark(null);
+            }else{
+                group.setAvgMark(tryParseDouble(params.get("avgMark")[0]) ? Double.parseDouble(params.get("avgMark")[0]) : null);
+            }
         }
         if(params.containsKey("prevId")){
             id = Integer.parseInt(params.get("prevId")[0]);

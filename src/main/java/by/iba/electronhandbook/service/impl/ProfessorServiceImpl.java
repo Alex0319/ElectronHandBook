@@ -36,9 +36,6 @@ public class ProfessorServiceImpl extends AbstractService<Professor> {
             if(params.containsKey("birthDate")){
                 professor.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("birthDate")[0]));
             }
-            if(params.containsKey("avgMark")){
-                professor.setAvgMark(Double.parseDouble(params.get("avgMark")[0])    );
-            }
             if(params.containsKey("prevId")){
                 id = Integer.parseInt(params.get("prevId")[0]);
             }

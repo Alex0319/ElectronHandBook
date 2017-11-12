@@ -245,6 +245,7 @@ function clearInputs() {
 function buildObjStr(obj) {
     var result = '';
     for(var key in obj){
+        if(obj[key] !== null)
         if(key === 'id')
             result = obj[key] + ' ' + result;
         else
@@ -310,11 +311,11 @@ function fillForm(rowIndex) {
 
 function emptyData(data) {
     for(var key in data){
-        if(key !== 'id' && !$.isPlainObject(data[key]))
+        if(key !== 'id' && !$.isPlainObject(data[key]) && data[key] !== null)
             return false;
         if($.isPlainObject(data[key]))
             for(var key2 in data[key]){
-                if(key2 !== 'id' && !$.isPlainObject(data[key2]))
+                if(key2 !== 'id' && !$.isPlainObject(data[key2]) && data[key] !== null)
                     return false;
             }
     }
@@ -340,13 +341,14 @@ function loadRequiredData(rowNumber) {
                 for(var i = 0; i < data[key].length; i++){
                     var result = '', selected = '';
                     for(var value in (data[key])[i]){
-                        if(value == 'id'){
-                            result = ((data[key])[i])[value] + ' ' + result;
-                            selected = value=='id' && (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
+                        if(((data[key])[i])[value] !== null)
+                            if(value == 'id'){
+                                result = ((data[key])[i])[value] + ' ' + result;
+                                selected = value=='id' && (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
+                            }
+                            else
+                                result += ((data[key])[i])[value] + ' ';
                         }
-                        else
-                            result += ((data[key])[i])[value] + ' ';
-                    }
                     options += '<option value="' + ((data[key])[i])['id'] + '" '+ selected +'>' + result.trim() + '</option>';
                 }
                 $('#'+key).html(options);

@@ -37,7 +37,10 @@
                 if(!params.isAdd)
                     fillForm(params.row);
                 else
-                    $('#id').parent().remove();
+                    if($('#id').attr('name') == 'id')
+                        $('#id').parent().remove();
+                    else
+                        $('#id').prop('readonly', false);
                 loadRequiredData(params.row);
             }
         });

@@ -3,7 +3,6 @@ package by.iba.electronhandbook.command.impl;
 import by.iba.electronhandbook.command.Command;
 import by.iba.electronhandbook.exception.CommandException;
 import by.iba.electronhandbook.exception.ServiceException;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ public abstract class AbstractJsonCommand implements Command {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+//            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             resp.getWriter().write(objectMapper.writeValueAsString(result));
         } catch (IOException e) {
             throw new ServiceException(e);

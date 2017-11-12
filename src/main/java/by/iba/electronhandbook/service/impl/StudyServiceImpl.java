@@ -1,6 +1,5 @@
 package by.iba.electronhandbook.service.impl;
 
-import by.iba.electronhandbook.bean.Professor;
 import by.iba.electronhandbook.bean.Study;
 import by.iba.electronhandbook.bean.dto.StudyDto;
 import by.iba.electronhandbook.dao.impl.StudyDaoImpl;
@@ -30,11 +29,6 @@ public class StudyServiceImpl extends AbstractService<Study>{
         }
         if(params.containsKey("avgMark")){
             study.setAvgMark(Double.parseDouble(params.get("avgMark")[0]));
-        }
-        if(params.containsKey("professor")){
-            Professor professor = new Professor();
-            professor.setId(Integer.parseInt(params.get("professor")[0]));
-            study.setProfessor(professor);
         }
         if(params.containsKey("prevId")){
             id = Integer.parseInt(params.get("prevId")[0]);
