@@ -147,6 +147,6 @@ img{
     transition:width 1s;
 }
 
-tr:nth-child(2n + 3){
+tbody tr:nth-child(2n){
     background: #f0f0f0;
 }

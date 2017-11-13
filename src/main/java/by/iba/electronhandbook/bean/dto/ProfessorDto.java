@@ -4,8 +4,8 @@ import by.iba.electronhandbook.bean.AbstractEntity;
 
 public class ProfessorDto extends AbstractEntity {
     private String firstName;
-    private String secondName;
     private String fatherName;
+    private String secondName;
 
     public String getFirstName() {
         return firstName;

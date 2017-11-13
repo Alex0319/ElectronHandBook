@@ -14,9 +14,10 @@
             <%@include file="/css/editForm.css"%>
             <%@include file="/css/modalWindow.css"%>
         </style>
-        <script src="/js/jquery-3.2.0.min.js"></script>
-        <script src="/js/adminJS.js"></script>
-        <script src="/js/editForm.js"></script>
+        <script src="<c:url value="/js/jquery-3.2.0.min.js"/>"></script>
+        <script src="<c:url value="/js/adminJS.js"/>"></script>
+        <script src="<c:url value="/js/editForm.js"/>"></script>
+        <script src="<c:url value="/js/buildTable.js"/>"></script>
     </head>
     <body>
         <div id="main">
