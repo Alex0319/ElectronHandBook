@@ -18,6 +18,7 @@
         <script src="<c:url value="/js/adminJS.js"/>"></script>
         <script src="<c:url value="/js/editForm.js"/>"></script>
         <script src="<c:url value="/js/buildTable.js"/>"></script>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     </head>
     <body>
         <div id="main">

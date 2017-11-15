@@ -1,9 +1,9 @@
 :-moz-placeholder{
-    color: blue;
+    color: #65737e;
 }
 
 ::-webkit-input-placeholder{
-    color: blue;
+    color: #65737e;
 }
 
 .updateOrAddForm{
@@ -115,7 +115,7 @@ button.submit:active {
 }
 
 .updateOrAddForm input:focus{
-    padding-right:70px;
+    padding-right:35px;
 }
 
 .updateOrAddForm input{
@@ -123,7 +123,7 @@ button.submit:active {
     -webkit-transition: padding .25s;
     -o-transition: padding .25s;
     transition: padding .25s;
-    padding-right: 30px;
+    padding-right:30px;
 }
 
 input:required{
@@ -135,7 +135,7 @@ input:required{
     padding: 1em;
 }
 
-.updateOrAddForm input:focus:invalid{
+.updateOrAddForm input:not(.searchInput):focus:invalid{
     background: #fff url(/images/invalid.jpg) no-repeat 98% center;
     background-size: 10% auto;
     box-shadow: 0 0 5px #d45252;
@@ -179,4 +179,18 @@ input:required{
 
 .updateOrAddForm input:required:valid + .formHint::before {
     color:#28921f;
+}
+
+.searchBlock{
+    width: 100%;
+    vertical-align: middle;
+    position: relative;
+}
+
+.searchBlock .icon{
+    position: absolute;
+    margin-left: -25px;
+    margin-top: 6px;
+    z-index: 1;
+    color: #4f5b66;
 }
