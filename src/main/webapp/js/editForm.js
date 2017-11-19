@@ -22,12 +22,13 @@
 
         var markup = [
             '<div id="updateAddOverlay">',
+            '<div class="modalWindow">',
             '<div id="updateAddBox">',
             '<h1>',params.title,'</h1>',
             '<div class="updateAdd"></div>',
             '<div id="confirmButtons">',
             buttonHTML,
-            '</div></div></div>'
+            '</div></div></div></div>'
         ].join('');
 
         $(markup).hide().appendTo('body').fadeIn();
@@ -41,6 +42,7 @@
                         $('#id').parent().remove();
                     else
                         $('#id').prop('readonly', false);
+                $(document.body).css('overflow-y', 'hidden');
                 loadRequiredData(params.row);
             }
         });
@@ -63,7 +65,26 @@
     $.confirm.hide = function(){
         $('#updateAddOverlay').fadeOut(function(){
             $(this).remove();
+            $(document.body).css('overflow-y', 'auto');
         });
     }
+
+    $.displayRecords = function (records, elementId) {
+        var template = $.get('/templates/admin/elementTag.html', function (data, status) {
+            if(status=='success'){
+                for(var i = 0; i < records.length; i++){
+                    var record = buildObjStr(records[i]);
+                    var id = records[i]['id'];
+                    $('.selectedItems').append(data);
+                    $('#notDefined').attr('id', id);
+                    $('#'+ id +'.elementTag .elementTagText').text(record);
+                }
+            }
+        });
+    }
+
+    $(document).on('click', '.tagButton', function () {
+        $(this.parentNode.parentNode).remove();
+    });
 
 })(jQuery);

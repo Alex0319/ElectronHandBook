@@ -146,8 +146,6 @@ var objects = new Array();
 var deep = 0;
 var parentModal = '';
 var childModal = '#modalWindow0';
-var arrayObj = {};
-var oldTarget;
 
 function deleteRow(obj) {
     $.ajax({
@@ -244,13 +242,19 @@ function clearInputs() {
 
 function fillForm(rowIndex) {
     for (var key in Data[rowIndex]){
-        $('#' + key).val(Data[rowIndex][key]);
+        if($.isArray(Data[rowIndex][key]))
+            $.displayRecords(Data[rowIndex][key], key)
+        else
+            $('#' + key).val(Data[rowIndex][key]);
     }
+    $('.searchInput').autocomplete({
+        serviceUrl: "/main/get_required_data/" + NameTable,
+        minChars: 3
+    });
 }
 
-function loadRequiredData(rowNumber) {
+function getRequiredData(obj) {
     var requiredData = {};
-    var obj = Data[rowNumber];
     for (var key in obj) {
         if($.isPlainObject(obj[key])){
             requiredData[key] = new Array();
@@ -260,11 +264,18 @@ function loadRequiredData(rowNumber) {
             }
         }
     }
-    $.get('/main/get_required_data', $.param(requiredData), function (data, status) {
-        if(status == 'success'){
-            buildSelectsForForm(data, obj);
-        }
-    });
+    return requiredData;
+}
+
+function loadRequiredData(rowNumber) {
+    var obj = Data[rowNumber];
+    var requiredData = getRequiredData(obj);
+    if(!$.isEmptyObject(requiredData))
+        $.get('/main/get_required_data', $.param(requiredData), function (data, status) {
+            if(status == 'success'){
+                buildSelectsForForm(data, obj);
+            }
+        });
 }
 
 function sendData(action) {
@@ -280,7 +291,8 @@ function sendData(action) {
                 Data = result;
                 setHtml(NameTable);
             }
-        }});
+        }
+    });
 }
 
 function getAllTableElements(nameTable) {

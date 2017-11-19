@@ -1,3 +1,7 @@
+:root{
+    --tagBackgroundColor: hsla(205,18%,68%, .9);
+}
+
 :-moz-placeholder{
     color: #65737e;
 }
@@ -193,4 +197,98 @@ input:required{
     margin-top: 6px;
     z-index: 1;
     color: #4f5b66;
+}
+
+.selectedItems{
+    margin-top: 10px;
+}
+
+.elementTag{
+    margin: 0 4px 4px 0;
+    width: auto;
+    display: inline-flex;
+}
+
+.elementTagSectionText{
+    display: inline-block;
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-grow: 1;
+    flex-grow: 1;
+    -webkit-flex-shrink: 1;
+    -ms-flex-negative: 1;
+    flex-shrink: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    padding: 0 11px;
+    text-align: left;
+}
+
+.elementTagSection{
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    position: relative;
+    height: 30px;
+    line-height: 28px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    background-color: var(--tagBackgroundColor);
+    color: black;
+}
+
+.tagButton{
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 0;
+    text-decoration: none;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    -webkit-appearance: none;
+    cursor: pointer;
+    font-family: inherit;
+    color: #fff;
+    border: 1px solid transparent;
+    position: relative;
+    vertical-align: top;
+    line-height: 28px;
+    height: 30px;
+    width: 30px;
+    min-width: 30px;
+    padding: 0;
+    font-size: 14px;
+    background-color: var(--tagBackgroundColor);
+}
+
+.tagButton:hover{
+    background-color: #0f8fee;
+}
+
+.tagButton > .tagIcon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -8px;
+    margin-left: -8px;
+    background-image: url(https://i.jobs.tut.by/bloko/bloko/blocks/icon/remove-icon__min_.svg?01022017) ;
+}
+
+.tagIcon{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: 0 0 no-repeat;
+    vertical-align: middle;
+    border: 0;
+    outline: none;
+    text-decoration: none;
 }
