@@ -43,7 +43,7 @@ public class StudentServiceImpl extends AbstractService<Student>{
     }
 
     @Override
-    public List<StudentDto> getAllDto() throws ServiceException {
+    public List<StudentDto> getAllDto(String queryName, String[] params) throws ServiceException {
         List<Student> students = getAll();
         List<StudentDto> studentDtos = new ArrayList<>();
 

@@ -8,10 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
 public abstract class MySqlAbstractDao{
@@ -72,6 +69,20 @@ public abstract class MySqlAbstractDao{
             }
         } catch (SQLException e) {
             logger.error(e);
+        }
+    }
+
+    protected void setParam(PreparedStatement statement, String param, int paramNumber) throws SQLException{
+        int type = statement.getParameterMetaData().getParameterType(paramNumber);
+        switch (JDBCType.valueOf(type)){
+            case INTEGER: statement.setInt(paramNumber, Integer.parseInt(param));
+                break;
+            case VARCHAR: statement.setString(paramNumber, param);
+                break;
+            case DOUBLE: statement.setDouble(paramNumber, Double.parseDouble(param));
+                break;
+            case FLOAT: statement.setFloat(paramNumber, Float.parseFloat(param));
+                break;
         }
     }
 }

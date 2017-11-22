@@ -31,6 +31,7 @@ public final class Constants {
     public static final String DELETE_PROFESSOR = "DELETE FROM `db_handbook`.`professors` WHERE `ID`=?";
     public static final String UPDATE_PROFESSOR = "UPDATE `db_handbook`.`professors` SET `FIRST_NAME`=?, `SECOND_NAME`=?, `FATHER_NAME`=?, `BIRTH_DATE`=? WHERE `ID`=?";
     public static final String GET_PROFESSOR = GET_ALL_PROFESSORS.concat(" WHERE `ID`=?");
+    public static final String GET_MATCH_PROFESSORS = GET_ALL_PROFESSORS.concat(" WHERE `FIRST_NAME` LIKE CONCAT('%',?,'%')");
 
     public static final String GET_ALL_STUDIES = "SELECT `studies`.`ID` as `STUDY_ID`, `NAME`, `HOURS`, `studies`.`AVG_MARK` as `STUDY_AVG_MARK`, " +
             "`professors`.`ID` as `PROFESSOR_ID`, `FIRST_NAME`, `SECOND_NAME`, `FATHER_NAME` " +

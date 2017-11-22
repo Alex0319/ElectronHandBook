@@ -59,7 +59,7 @@ public class MarkServiceImpl extends AbstractService<Mark>{
     }
 
     @Override
-    public List<Mark> getAllDto() throws ServiceException {
+    public List<Mark> getAllDto(String queryName, String[] params) throws ServiceException {
         return getAll();
     }
 }

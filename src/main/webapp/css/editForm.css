@@ -279,7 +279,7 @@ input:required{
     left: 50%;
     margin-top: -8px;
     margin-left: -8px;
-    background-image: url(https://i.jobs.tut.by/bloko/bloko/blocks/icon/remove-icon__min_.svg?01022017) ;
+    background-image: url(/images/remove-icon.svg) ;
 }
 
 .tagIcon{

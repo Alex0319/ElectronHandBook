@@ -30,7 +30,7 @@ public class UserServiceImpl extends AbstractService<UserDto>{
     }
 
     @Override
-    public List<UserDto> getAllDto() throws ServiceException {
+    public List<UserDto> getAllDto(String queryName, String[] params) throws ServiceException {
         return getAll();
     }
 

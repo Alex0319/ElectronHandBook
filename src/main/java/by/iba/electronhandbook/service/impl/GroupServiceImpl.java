@@ -33,7 +33,7 @@ public class GroupServiceImpl extends AbstractService<Group>{
     }
 
     @Override
-    public List<Group> getAllDto() throws ServiceException {
+    public List<Group> getAllDto(String queryName, String[] params) throws ServiceException {
         List<Group> groups = getAll();
         for(Group group: groups){
             group.setAvgMark(null);

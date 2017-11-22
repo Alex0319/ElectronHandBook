@@ -2,32 +2,32 @@
     <ul>
         <li>
             <label for="id">Id:</label>
-            <input type="text" name="id" id="id" readonly/>
+            <input class="dataItem" type="text" name="id" id="id" readonly/>
         </li>
         <li>
             <label for="study">Study:</label>
-            <select name="study" id="study"></select>
+            <select class="dataItem" name="study" id="study"></select>
         </li>
         <li>
             <label for="student">Student:</label>
-            <select name="student" id="student"></select>
+            <select class="dataItem" name="student" id="student"></select>
         </li>
         <li>
             <label for="date">Date:</label>
-            <input type="date" name="date" id="date" placeholder="2017-03-10" required autocomplete="off"/>
+            <input class="dataItem" type="date" name="date" id="date" placeholder="2017-03-10" required autocomplete="off"/>
         </li>
         <li>
             <label for="professor">Professor:</label>
-            <select name="professor" id="professor"></select>
+            <select class="dataItem" name="professor" id="professor"></select>
         </li>
         <li>
             <label for="mark">Mark:</label>
-            <input type="number" name="mark" id="mark" placeholder="9" min="0" max="10" required autocomplete="off"/>
+            <input class="dataItem" type="number" name="mark" id="mark" placeholder="9" min="0" max="10" required autocomplete="off"/>
             <span class="formHint">Mark could be from 0 to 10</span>
         </li>
         <li>
             <label for="comments">Comments:</label>
-            <input type="text" name="comments" id="comments" placeholder="Good comment" minlength="2" maxlength="150" required  autocomplete="off"/>
+            <input class="dataItem" type="text" name="comments" id="comments" placeholder="Good comment" minlength="2" maxlength="150" required  autocomplete="off"/>
             <span class="formHint">Comments could contain from 2 to 150 chars</span>
         </li>
     </ul>

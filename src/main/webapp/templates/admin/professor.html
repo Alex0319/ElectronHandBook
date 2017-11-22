@@ -2,33 +2,33 @@
     <ul>
         <li>
             <label for="id">Id:</label>
-            <input type="text" name="id" id="id" readonly/>
+            <input class="dataItem" type="text" name="id" id="id" readonly/>
         </li>
         <li>
             <label for="firstName">Firstname:</label>
-            <input type="text" name="firstName" id="firstName" placeholder="Alex" minlength="2" maxlength="50" required  autocomplete="off"/>
+            <input class="dataItem" type="text" name="firstName" id="firstName" placeholder="Alex" minlength="2" maxlength="50" required  autocomplete="off"/>
             <span class="formHint">Firstname could contain from 2 to 50 chars</span>
         </li>
         <li>
             <label for="secondName">Secondname:</label>
-            <input type="text" name="secondName" id="secondName" placeholder="Savchuk" minlength="2" maxlength="70" required autocomplete="off"/>
+            <input class="dataItem" type="text" name="secondName" id="secondName" placeholder="Savchuk" minlength="2" maxlength="70" required autocomplete="off"/>
             <span class="formHint">Secondname could contain from 2 to 70 chars</span>
         </li>
         <li>
             <label for="fatherName">Fathername:</label>
-            <input type="text" name="fatherName" id="fatherName" placeholder="" minlength="2" maxlength="70" required autocomplete="off"/>
+            <input class="dataItem" type="text" name="fatherName" id="fatherName" placeholder="" minlength="2" maxlength="70" required autocomplete="off"/>
             <span class="formHint">Fathername could contain from 2 to 70 chars</span>
         </li>
         <li>
             <label for="birthDate">Birthdate:</label>
-            <input type="date" name="birthDate" id="birthDate" required autocomplete="off"/>
+            <input class="dataItem" type="date" name="birthDate" id="birthDate" required autocomplete="off"/>
         </li>
         <li>
-            <label for="studies">Studies:</label>
+            <label for="study">Studies:</label>
             <div class="searchBlock">
                 <input class="searchInput" type="text" placeholder="Start typing here" minlength="3" maxlength="100" autocomplete="off"/>
                 <span class="icon"><i class="fa fa-search"></i></span>
-                <div class="selectedItems" id="studies"></div>
+                <div class="selectedItems" id="study"></div>
             </div>
         </li>
     </ul>

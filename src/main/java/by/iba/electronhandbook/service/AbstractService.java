@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractService<T extends AbstractEntity> implements GenericService<T> {
-    private GenericDao<T> genericDao;
+    protected GenericDao<T> genericDao;
     private T entity;
     protected int id;
 
@@ -74,6 +74,14 @@ public abstract class AbstractService<T extends AbstractEntity> implements Gener
             return true;
         }catch (NumberFormatException e){
             return false;
+        }
+    }
+
+    protected List<T> getMatches(String matchName, String[] matchParams) throws ServiceException{
+        try {
+            return genericDao.getAllCorrespondingToCondition(matchName, matchParams);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
     }
 

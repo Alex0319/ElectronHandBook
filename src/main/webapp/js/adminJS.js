@@ -226,10 +226,18 @@ function addData() {
 }*/
 
 function getData() {
-    var inputs = $('.updateOrAddForm').find('input,select');
+    var inputs = $('.updateOrAddForm').find('.dataItem');
     var result={};
     for (var i = 0; i<inputs.length; i++){
         result[inputs[i].id] = $(inputs[i]).val();
+    }
+    if($('.selectedItems').length)
+    {
+        var id = $('.selectedItems').attr('id');
+        var items = $('.selectedItems').find('.elementTag');
+        result[id] = new Array();
+        for(i=0; i < items.length; i++)
+            result[id].push($(items[i]).data());
     }
     return result;
 }
@@ -248,20 +256,24 @@ function fillForm(rowIndex) {
             $('#' + key).val(Data[rowIndex][key]);
     }
     $('.searchInput').autocomplete({
-        serviceUrl: "/main/get_required_data/" + NameTable,
-        minChars: 3
+        serviceUrl: "/main/get_required_data",
+        params: { data: $('.selectedItems').attr('id')},
+        minChars: 3,
+        deferRequestBy: 300,
+        transformResult: function (response) {
+            console.log(response);
+            return {
+                suggestions: []
+            }
+        }
     });
 }
 
 function getRequiredData(obj) {
-    var requiredData = {};
+    var requiredData = [];
     for (var key in obj) {
         if($.isPlainObject(obj[key])){
-            requiredData[key] = new Array();
-            var i = 0;
-            for (var keyData in obj[key]){
-                requiredData[key][i++] = keyData;
-            }
+            requiredData.push(key);
         }
     }
     return requiredData;
@@ -271,7 +283,7 @@ function loadRequiredData(rowNumber) {
     var obj = Data[rowNumber];
     var requiredData = getRequiredData(obj);
     if(!$.isEmptyObject(requiredData))
-        $.get('/main/get_required_data', $.param(requiredData), function (data, status) {
+        $.get('/main/get_required_data', $.param({ data: requiredData }, true), function (data, status) {
             if(status == 'success'){
                 buildSelectsForForm(data, obj);
             }

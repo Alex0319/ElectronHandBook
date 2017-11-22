@@ -76,8 +76,10 @@
                     var record = buildObjStr(records[i]);
                     var id = records[i]['id'];
                     $('.selectedItems').append(data);
-                    $('#notDefined').attr('id', id);
-                    $('#'+ id +'.elementTag .elementTagText').text(record);
+                    $('.addedElement').attr('data-id', id);
+                    $('.elementTagSection').attr('title', record);
+                    $('.addedElement .elementTagText').text(record);
+                    $('.addedElement').removeClass('addedElement');
                 }
             }
         });

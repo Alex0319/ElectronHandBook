@@ -46,6 +46,27 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
         return entities;
     }
 
+    public List<T> getAllCorrespondingToCondition(String query, String[] params) throws DaoException{
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        List<T> entities = new ArrayList<>();
+        Connection connection = null;
+        try{
+            connection = getConnection();
+            statement = connection.prepareStatement(query);
+            fillStatementQueryCondition(statement, params);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                entities.add(fillEntity(resultSet));
+            }
+        }catch (SQLException e){
+            throw new DaoException(e);
+        }finally {
+            closeConnection(connection, statement);
+        }
+        return entities;
+    }
+
     @Override
     public void add(T entity) throws DaoException {
         PreparedStatement statement = null;
@@ -116,6 +137,15 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
             closeConnection(connection, statement);
         }
         return entity;
+    }
+
+    private void fillStatementQueryCondition(PreparedStatement statement, String[] params) throws SQLException{
+        int paramsCount = statement.getParameterMetaData().getParameterCount();
+        if(paramsCount != 0){
+            for(int i = 0; i < paramsCount; i++){
+                setParam(statement, params[i], i+1);
+            }
+        }
     }
 
     protected abstract T fillEntity(ResultSet resultSet) throws SQLException;

@@ -7,6 +7,7 @@ import by.iba.electronhandbook.service.GenericService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,22 @@ public class GetRequiredDataCommand extends AbstractJsonCommand {
         Map<String, String[]> params = req.getParameterMap();
         Map<String, List<?>> result = new HashMap<>();
         try{
-            for(String param : params.keySet()){
-                String serviceName = param.substring(0, param.length()-2);
-                GenericService<?> service = ServiceMapper.getInstance().getService(serviceName);
-                if(service != null) {
-                    List<?> entities = service.getAllDto();
-                    result.put(serviceName, entities);
+            if(params.containsKey("data")) {
+                for (String serviceName : params.get("data")) {
+                    GenericService<?> service = ServiceMapper.getInstance().getService(serviceName);
+                    if (service != null) {
+                        List entities = new ArrayList<>();
+                        if(params.size() > 1){
+                            for (String key: params.keySet()){
+                                if(!key.equals("data")){
+                                    entities.addAll(service.getAllDto(key, params.get(key)));
+                                }
+                            }
+                        }else{
+                            entities = service.getAllDto(null, null);
+                        }
+                        result.put(serviceName, entities);
+                    }
                 }
             }
             formJsonResponse(response, result);

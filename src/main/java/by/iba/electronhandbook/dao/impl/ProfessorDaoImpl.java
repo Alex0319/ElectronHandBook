@@ -3,6 +3,7 @@ package by.iba.electronhandbook.dao.impl;
 import by.iba.electronhandbook.bean.Professor;
 import by.iba.electronhandbook.bean.Study;
 import by.iba.electronhandbook.dao.MySqlGenericDaoImpl;
+import by.iba.electronhandbook.dao.ProfessorDao;
 import by.iba.electronhandbook.exception.DaoException;
 
 import java.sql.Date;
@@ -13,7 +14,7 @@ import java.util.*;
 
 import static by.iba.electronhandbook.constants.Constants.*;
 
-public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor>{
+public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor> implements ProfessorDao{
     private Map<Integer, Set<Study>> map = new HashMap<>();
 
     public ProfessorDaoImpl() {
@@ -64,5 +65,10 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor>{
         if(statement.getParameterMetaData().getParameterCount() > 4){
             statement.setInt(5, entity.getId());
         }
+    }
+
+    @Override
+    public List<Professor> getAllCorrespondingToCondition(String queryName, String[] params) throws DaoException {
+        return super.getAllCorrespondingToCondition(GET_MATCH_PROFESSORS ,params);
     }
 }

@@ -2,29 +2,29 @@
     <ul>
         <li>
             <label for="id">Id:</label>
-            <input type="text" name="id" id="id" readonly/>
+            <input class="dataItem" type="text" name="id" id="id" readonly/>
         </li>
         <li>
             <label for="name">Name:</label>
-            <input type="text" name="name" id="name" placeholder="Math" minlength="2" maxlength="50" required  autocomplete="off"/>
+            <input class="dataItem" type="text" name="name" id="name" placeholder="Math" minlength="2" maxlength="50" required  autocomplete="off"/>
             <span class="formHint">Name could contain from 2 to 50 chars</span>
         </li>
         <li>
             <label for="hours">Hours:</label>
-            <input type="number" name="hours" id="hours" placeholder="100" min="1" max="500" required autocomplete="off"/>
+            <input class="dataItem" type="number" name="hours" id="hours" placeholder="100" min="1" max="500" required autocomplete="off"/>
             <span class="formHint">Hours could be from 1 to 500</span>
         </li>
         <li>
             <label for="avgMark">Average mark:</label>
-            <input type="text" name="avgMark" id="avgMark" placeholder="8.7" minlength="1" maxlength="5" required autocomplete="off"/>
+            <input class="dataItem" type="text" name="avgMark" id="avgMark" placeholder="8.7" minlength="1" maxlength="5" required autocomplete="off"/>
             <span class="formHint">Average mark could be 0 to 10</span>
         </li>
         <li>
-            <label for="professors">Professors:</label>
+            <label for="professor">Professors:</label>
             <div class="searchBlock">
                 <input class="searchInput" type="text" placeholder="Start typing here" minlength="3" maxlength="100" autocomplete="off"/>
                 <span class="icon"><i class="fa fa-search"></i></span>
-                <div class="selectedItems" id="professors"></div>
+                <div class="selectedItems" id="professor"></div>
             </div>
         </li>
     </ul>
