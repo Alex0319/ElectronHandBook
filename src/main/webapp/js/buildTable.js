@@ -24,20 +24,16 @@ function build(obj) {
 }
 
 function buildObjStr(obj) {
-    var result = '';
-    if(obj.length > 0){
-        for(var i = 0; i < obj.length; i++)
-            result += build(obj[i]) + '<br/>';
-    }
-    else
-        result = build(obj);
-    return result.trim();
+    return (obj.length > 0 ? obj.reduce(function (temp, elem) {
+                                            return temp + build(elem) + '<br/>';
+                                         }, '') : build(obj)).trim();
 }
 
 function buildTableTitle(tableName, columnTrString, countColumn) {
     var mainHeader = '<tr class="titleTr"><td class="titleTd">'+tableName.toUpperCase()+'</td><td colspan="' + (countColumn ? countColumn : 0) + '"></td><td class="plusTd button"></td></tr>';
-    if(columnTrString)
+    if(columnTrString){
         mainHeader += columnTrString;
+    }
     return '<thead>' + mainHeader + '</thead>';
 }
 
@@ -89,13 +85,14 @@ function buildSelectsForForm(data, obj) {
         for(var i = 0; i < data[key].length; i++){
             var result = '', selected = '';
             for(var value in (data[key])[i]){
-                if(((data[key])[i])[value] !== null)
+                if(((data[key])[i])[value] !== null){
                     if(value == 'id'){
                         result = ((data[key])[i])[value] + ' ' + result;
-                        selected = value=='id' && (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
+                        selected = (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
                     }
                     else
                         result += ((data[key])[i])[value] + ' ';
+                }
             }
             options += '<option value="' + ((data[key])[i])['id'] + '" '+ selected +'>' + result.trim() + '</option>';
         }

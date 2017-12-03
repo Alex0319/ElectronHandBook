@@ -9,7 +9,7 @@
         params.buttons['Cancel'] = {
             'class': 'gray',
             'action': function () {}
-        }
+        };
 
         $.each(params.buttons,function(name,obj){
             var buttonClass = name !== 'Cancel' ? 'submit' : '';
@@ -43,31 +43,28 @@
                     else
                         $('#id').prop('readonly', false);
                 $(document.body).css('overflow-y', 'hidden');
+                $.setInputAutoComplete();
                 loadRequiredData(params.row);
             }
         });
 
-        var buttons = $('#updateAddBox .button'),
-            i = 0;
+        var buttons = $('#updateAddBox .button'), i = 0;
 
         $.each(params.buttons,function(name,obj){
             buttons.eq(i++).click(function(){
-                if(obj.actionParam)
-                    obj.action(obj.actionParam);
-                else
-                    obj.action();
+                obj.action(obj.actionParam ? obj.actionParam : null);
                 $.confirm.hide();
                 return false;
             });
         });
-    }
+    };
 
     $.confirm.hide = function(){
         $('#updateAddOverlay').fadeOut(function(){
             $(this).remove();
             $(document.body).css('overflow-y', 'auto');
         });
-    }
+    };
 
     $.displayRecords = function (records, elementId) {
         var template = $.get('/templates/admin/elementTag.html', function (data, status) {
@@ -83,7 +80,31 @@
                 }
             }
         });
-    }
+    };
+
+    $.setInputAutoComplete = function () {
+        if($('.searchInput').length){
+            var id = $('.selectedItems').attr('id');
+            $('.searchInput').autocomplete({
+                serviceUrl: "/main/get_required_data",
+                dataType: 'json',
+                params: { service: id},
+                minChars: 3,
+                width: 220,
+                showNoSuggestionNotice: true,
+                deferRequestBy: 300,
+                preserveInput: true,
+                transformResult: function (response) {
+                    return {
+                        suggestions: response[id].map(function (obj) {
+                            return buildObjStr(obj);
+                        })
+                    }
+                },
+                zIndex: 1080
+            });
+        }
+    };
 
     $(document).on('click', '.tagButton', function () {
         $(this.parentNode.parentNode).remove();

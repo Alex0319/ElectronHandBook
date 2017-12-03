@@ -63,4 +63,9 @@ public class StudyDaoImpl extends MySqlGenericDaoImpl<Study>{
             statement.setInt(4, entity.getId());
         }
     }
+
+    @Override
+    public List<Study> getAllCorrespondingToCondition(String queryName, String[] params) throws DaoException {
+        return super.getAllCorrespondingToCondition(GET_MATCH_STUDIES ,params);
+    }
 }

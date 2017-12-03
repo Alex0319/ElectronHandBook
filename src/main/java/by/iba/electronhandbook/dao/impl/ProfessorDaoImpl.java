@@ -6,10 +6,8 @@ import by.iba.electronhandbook.dao.MySqlGenericDaoImpl;
 import by.iba.electronhandbook.dao.ProfessorDao;
 import by.iba.electronhandbook.exception.DaoException;
 
+import java.sql.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 import static by.iba.electronhandbook.constants.Constants.*;
@@ -42,15 +40,20 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor> implements 
             professor.setFirstName(resultSet.getString("FIRST_NAME"));
             professor.setSecondName(resultSet.getString("SECOND_NAME"));
             professor.setFatherName(resultSet.getString("FATHER_NAME"));
-            professor.setBirthDate(resultSet.getDate("BIRTH_DATE"));
 
-            study.setId(resultSet.getInt("STUDY_ID"));
-            if(!resultSet.wasNull()){
-                study.setName(resultSet.getString("NAME"));
-                if(!map.containsKey(professor.getId())){
-                    map.put(professor.getId(), new HashSet<Study>());
+            if(isColumnExistsInResultSet(resultSet, "BIRTH_DATE")){
+                professor.setBirthDate(resultSet.getDate("BIRTH_DATE"));
+            }
+
+            if(isColumnExistsInResultSet(resultSet, "STUDY_ID")){
+                study.setId(resultSet.getInt("STUDY_ID"));
+                if(!resultSet.wasNull()){
+                    study.setName(resultSet.getString("NAME"));
+                    if(!map.containsKey(professor.getId())){
+                        map.put(professor.getId(), new HashSet<Study>());
+                    }
+                    map.get(professor.getId()).add(study);
                 }
-                map.get(professor.getId()).add(study);
             }
         }
         return professor;
@@ -70,5 +73,21 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor> implements 
     @Override
     public List<Professor> getAllCorrespondingToCondition(String queryName, String[] params) throws DaoException {
         return super.getAllCorrespondingToCondition(GET_MATCH_PROFESSORS ,params);
+    }
+
+    @Override
+    protected void updateEntity(Connection connection, Professor entity) throws SQLException {
+        super.updateEntity(connection, entity);
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(GET_STUDIES_OF_PROFESSOR);
+            statement.setInt(1, entity.getId());
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+
+            }
+        }finally {
+            closeStatement(statement);
+        }
     }
 }

@@ -292,3 +292,11 @@ input:required{
     outline: none;
     text-decoration: none;
 }
+
+.autocomplete-suggestions { margin-top: -10px; border: 1px solid #999; background: #FFF;}
+.autocomplete-suggestion { padding: 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-no-suggestion {padding: 5px}
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }

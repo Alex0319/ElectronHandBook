@@ -2,6 +2,7 @@ package by.iba.electronhandbook.constants;
 
 public final class Constants {
 
+    private Constants(){}
     public static final String GET_ALL_USERS = "SELECT `USER_ID`, `PASSWORD`, `ROLE` FROM `db_handbook`.`users`";
     public static final String ADD_USER = "INSERT INTO `db_handbook`.`users` (`PASSWORD`,`ROLE`) VALUES (?,?)";
     public static final String DELETE_USER = "DELETE FROM `db_handbook`.`users` WHERE `USER_ID`=?";
@@ -31,7 +32,12 @@ public final class Constants {
     public static final String DELETE_PROFESSOR = "DELETE FROM `db_handbook`.`professors` WHERE `ID`=?";
     public static final String UPDATE_PROFESSOR = "UPDATE `db_handbook`.`professors` SET `FIRST_NAME`=?, `SECOND_NAME`=?, `FATHER_NAME`=?, `BIRTH_DATE`=? WHERE `ID`=?";
     public static final String GET_PROFESSOR = GET_ALL_PROFESSORS.concat(" WHERE `ID`=?");
-    public static final String GET_MATCH_PROFESSORS = GET_ALL_PROFESSORS.concat(" WHERE `FIRST_NAME` LIKE CONCAT('%',?,'%')");
+    public static final String GET_MATCH_PROFESSORS = "SELECT * FROM " +
+            "(SELECT `ID`, `FIRST_NAME`, `SECOND_NAME`, `FATHER_NAME`, @pattern := CONCAT('%',?,'%') " +
+            "FROM `db_handbook`.`professors`) AS result " +
+            "WHERE `FIRST_NAME` LIKE @pattern " +
+            "OR `SECOND_NAME` LIKE @pattern " +
+            "OR `FATHER_NAME` LIKE @pattern";
 
     public static final String GET_ALL_STUDIES = "SELECT `studies`.`ID` as `STUDY_ID`, `NAME`, `HOURS`, `studies`.`AVG_MARK` as `STUDY_AVG_MARK`, " +
             "`professors`.`ID` as `PROFESSOR_ID`, `FIRST_NAME`, `SECOND_NAME`, `FATHER_NAME` " +
@@ -44,6 +50,7 @@ public final class Constants {
     public static final String DELETE_STUDY = "DELETE FROM `db_handbook`.`studies` WHERE `studies`.`ID`=?";
     public static final String UPDATE_STUDY = "UPDATE `db_handbook`.`studies` SET `NAME`=?, `HOURS`=?, `AVG_MARK`=? WHERE `ID`=?";
     public static final String GET_STUDY = GET_ALL_STUDIES.concat(" WHERE `ID`=?");
+    public static final String GET_MATCH_STUDIES = GET_ALL_STUDIES.concat(" WHERE `NAME` LIKE CONCAT('%',?,'%') GROUP BY `studies`.`ID`");
 
     public static final String GET_ALL_MARKS = "SELECT `marks`.`ID` as `MARK_ID`, `DATE`, `MARK`, `COMMENTS`, " +
             "`studies`.`ID` as `STUDY_ID`, `studies`.`NAME`, " +
@@ -60,4 +67,8 @@ public final class Constants {
     public static final String DELETE_MARK = "DELETE FROM `db_handbook`.`marks` WHERE `marks`.`ID`=?";
     public static final String UPDATE_MARK = "UPDATE `db_handbook`.`marks` SET `STUDY_ID`=?, `STUDENT_ID`=?, `DATE`=?,`PROFESSOR_ID`=?, `MARK`=?, `COMMENTS`=? WHERE `ID`=?";
     public static final String GET_MARK = GET_ALL_MARKS.concat(" WHERE `ID`=?");
+
+    public static final String GET_STUDIES_OF_PROFESSOR = "SELECT `STUDY_ID` " +
+            "FROM `db_handbook`.`study_professor` " +
+            "WHERE `PROFESSOR_ID` = ?";
 }

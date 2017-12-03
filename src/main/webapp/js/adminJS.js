@@ -237,7 +237,7 @@ function getData() {
         var items = $('.selectedItems').find('.elementTag');
         result[id] = new Array();
         for(i=0; i < items.length; i++)
-            result[id].push($(items[i]).data());
+            result[id].push($(items[i]).data('id'));
     }
     return result;
 }
@@ -255,18 +255,6 @@ function fillForm(rowIndex) {
         else
             $('#' + key).val(Data[rowIndex][key]);
     }
-    $('.searchInput').autocomplete({
-        serviceUrl: "/main/get_required_data",
-        params: { data: $('.selectedItems').attr('id')},
-        minChars: 3,
-        deferRequestBy: 300,
-        transformResult: function (response) {
-            console.log(response);
-            return {
-                suggestions: []
-            }
-        }
-    });
 }
 
 function getRequiredData(obj) {
@@ -283,7 +271,7 @@ function loadRequiredData(rowNumber) {
     var obj = Data[rowNumber];
     var requiredData = getRequiredData(obj);
     if(!$.isEmptyObject(requiredData))
-        $.get('/main/get_required_data', $.param({ data: requiredData }, true), function (data, status) {
+        $.get('/main/get_required_data', $.param({ service: requiredData }, true), function (data, status) {
             if(status == 'success'){
                 buildSelectsForForm(data, obj);
             }
@@ -291,11 +279,10 @@ function loadRequiredData(rowNumber) {
 }
 
 function sendData(action) {
-    var addData = getData();
     $.ajax({
         type: 'POST',
         url: '/main/'+action+'/'+NameTable,
-        data: $.param(addData),
+        data: $.param(getData(), true),
         success: function (result) {
             if(typeof result == 'string'){
                 alert(result);

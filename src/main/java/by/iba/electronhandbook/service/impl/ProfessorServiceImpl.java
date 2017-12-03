@@ -47,7 +47,7 @@ public class ProfessorServiceImpl extends AbstractService<Professor> {
 
     @Override
     public List<?> getAllDto(String queryName, String[] params) throws ServiceException {
-        List<Professor> professors = params != null ? getMatches(queryName,     params) : getAll();
+        List<Professor> professors = params != null ? getMatches(queryName, params) : getAll();
         List<ProfessorDto> professorDtos = new ArrayList<>();
 
         for(Professor professor: professors){

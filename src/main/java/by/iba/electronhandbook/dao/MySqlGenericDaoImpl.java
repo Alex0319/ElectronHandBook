@@ -107,9 +107,7 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
         Connection connection = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement(UPDATE);
-            fillStatement(statement, entity);
-            statement.execute();
+            updateEntity(connection, entity);
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -145,6 +143,17 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
             for(int i = 0; i < paramsCount; i++){
                 setParam(statement, params[i], i+1);
             }
+        }
+    }
+
+    protected void updateEntity(Connection connection, T entity) throws SQLException{
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(UPDATE);
+            fillStatement(statement, entity);
+            statement.executeUpdate();
+        }finally {
+            closeStatement(statement);
         }
     }
 

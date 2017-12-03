@@ -49,20 +49,14 @@ public abstract class MySqlAbstractDao{
         Connection connection;
         try{
             connection = dataSource.getConnection();
+            return connection;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return connection;
     }
 
-    public void closeConnection(Connection connection, Statement statement) throws DaoException {
-        try {
-            if (statement != null) {
-                statement.close();
-            }
-        } catch (SQLException e) {
-            logger.error(e);
-        }
+    public final void closeConnection(Connection connection, Statement statement){
+        closeStatement(statement);
         try {
             if(connection != null){
                 connection.close();
@@ -72,7 +66,17 @@ public abstract class MySqlAbstractDao{
         }
     }
 
-    protected void setParam(PreparedStatement statement, String param, int paramNumber) throws SQLException{
+    public final void closeStatement(Statement statement){
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+    }
+
+    protected final void setParam(PreparedStatement statement, String param, int paramNumber) throws SQLException{
         int type = statement.getParameterMetaData().getParameterType(paramNumber);
         switch (JDBCType.valueOf(type)){
             case INTEGER: statement.setInt(paramNumber, Integer.parseInt(param));
@@ -84,5 +88,16 @@ public abstract class MySqlAbstractDao{
             case FLOAT: statement.setFloat(paramNumber, Float.parseFloat(param));
                 break;
         }
+    }
+
+    protected final boolean isColumnExistsInResultSet(ResultSet resultSet, String columnName) throws SQLException{
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        int numberOfColumns = resultSetMetaData.getColumnCount();
+        for (int i = 0; i < numberOfColumns; i++){
+            if(resultSetMetaData.getColumnLabel(i+1).equals(columnName)){
+                return true;
+            }
+        }
+        return false;
     }
 }

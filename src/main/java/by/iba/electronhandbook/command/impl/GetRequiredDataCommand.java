@@ -18,14 +18,14 @@ public class GetRequiredDataCommand extends AbstractJsonCommand {
         Map<String, String[]> params = req.getParameterMap();
         Map<String, List<?>> result = new HashMap<>();
         try{
-            if(params.containsKey("data")) {
-                for (String serviceName : params.get("data")) {
+            if(params.containsKey("service")) {
+                for (String serviceName : params.get("service")) {
                     GenericService<?> service = ServiceMapper.getInstance().getService(serviceName);
                     if (service != null) {
                         List entities = new ArrayList<>();
                         if(params.size() > 1){
                             for (String key: params.keySet()){
-                                if(!key.equals("data")){
+                                if(!key.equals("service")){
                                     entities.addAll(service.getAllDto(key, params.get(key)));
                                 }
                             }
