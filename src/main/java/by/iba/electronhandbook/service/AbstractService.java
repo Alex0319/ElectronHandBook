@@ -5,8 +5,10 @@ import by.iba.electronhandbook.dao.GenericDao;
 import by.iba.electronhandbook.exception.DaoException;
 import by.iba.electronhandbook.exception.ServiceException;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class AbstractService<T extends AbstractEntity> implements GenericService<T> {
     protected GenericDao<T> genericDao;
@@ -81,6 +83,20 @@ public abstract class AbstractService<T extends AbstractEntity> implements Gener
         try {
             return genericDao.getAllCorrespondingToCondition(matchName, matchParams);
         } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    protected final <E extends AbstractEntity> Set<E> getRelatedEntityIds(String[] values, Class<E> entityClass) throws ServiceException{
+        try {
+            Set<E> entities = new LinkedHashSet<>();
+            for (String id: values) {
+                E entity = entityClass.newInstance();
+                entity.setId(Integer.parseInt(id));
+                entities.add(entity);
+            }
+            return entities;
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new ServiceException(e);
         }
     }

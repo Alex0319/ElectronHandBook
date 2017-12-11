@@ -36,7 +36,10 @@ public class ProfessorDto extends AbstractEntity {
         if (this == o){
             return true;
         }
-        if (!(o instanceof ProfessorDto)){
+        if (!(o instanceof ProfessorDto)) {
+            return false;
+        }
+        if (!super.equals(o)){
             return false;
         }
 
@@ -45,17 +48,18 @@ public class ProfessorDto extends AbstractEntity {
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null){
             return false;
         }
-        if (secondName != null ? !secondName.equals(that.secondName) : that.secondName != null){
+        if (fatherName != null ? !fatherName.equals(that.fatherName) : that.fatherName != null){
             return false;
         }
-        return fatherName != null ? fatherName.equals(that.fatherName) : that.fatherName == null;
+        return secondName != null ? secondName.equals(that.secondName) : that.secondName == null;
     }
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
+        int result = super.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (fatherName != null ? fatherName.hashCode() : 0);
+        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
         return result;
     }
 }

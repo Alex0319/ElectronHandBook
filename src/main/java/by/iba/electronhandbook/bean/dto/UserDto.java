@@ -18,17 +18,21 @@ public class UserDto extends AbstractEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserDto)) {
+        if (!(o instanceof UserDto)){
+            return false;
+        }
+        if (!super.equals(o)){
             return false;
         }
 
         UserDto userDto = (UserDto) o;
-
         return role != null ? role.equals(userDto.role) : userDto.role == null;
     }
 
     @Override
     public int hashCode() {
-        return role != null ? role.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
     }
 }

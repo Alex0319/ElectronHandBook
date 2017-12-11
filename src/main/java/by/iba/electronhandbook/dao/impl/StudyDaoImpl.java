@@ -5,14 +5,14 @@ import by.iba.electronhandbook.bean.Study;
 import by.iba.electronhandbook.dao.MySqlGenericDaoImpl;
 import by.iba.electronhandbook.exception.DaoException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 import static by.iba.electronhandbook.constants.Constants.*;
 
 public class StudyDaoImpl extends MySqlGenericDaoImpl<Study>{
+    private static final String QUERY_PATTERN = "\\$\\$";
+
     private Map<Integer, Set<Professor>> map = new HashMap<>();
 
     public StudyDaoImpl() {
@@ -66,6 +66,45 @@ public class StudyDaoImpl extends MySqlGenericDaoImpl<Study>{
 
     @Override
     public List<Study> getAllCorrespondingToCondition(String queryName, String[] params) throws DaoException {
-        return super.getAllCorrespondingToCondition(GET_MATCH_STUDIES ,params);
+        String query = GET_MATCH_STUDIES;
+        if(queryName.equals("query[]")){
+            if( params.length > 1){
+                StringBuilder stringBuilder = new StringBuilder(query).append(" AND NOT `STUDY_ID` IN (");
+                for (int i = 1; i < params.length; i++){
+                    stringBuilder.append("?,");
+                }
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1).append(')');
+                query = stringBuilder.toString();
+            }
+        }
+        return super.getAllCorrespondingToCondition(query, params);
+    }
+
+    @Override
+    protected void addEntity(Connection connection, Study entity) throws SQLException {
+        super.addEntity(connection, entity);
+        entity.setId(getLastInsertedId());
+        callChangeRelatedStudiesProcedure(connection, ADD_RELATED_ENTITIES, entity);
+    }
+
+    @Override
+    protected void updateEntity(Connection connection, Study entity) throws SQLException {
+        super.updateEntity(connection, entity);
+        callChangeRelatedStudiesProcedure(connection, UPDATE_RELATED_ENTITIES, entity);
+    }
+
+    private void callChangeRelatedStudiesProcedure(Connection connection, String procedureCall, Study entity) throws SQLException{
+        CallableStatement statement = null;
+        try {
+            statement = connection.prepareCall(procedureCall);
+            statement.setInt(1, entity.getId());
+            statement.setString(2, "STUDY_ID");
+            statement.setString(3, "PROFESSOR_ID");
+            statement.setString(4, "study_professor");
+            statement.setString(5, getRelatedEntityIds(entity.getProfessors()));
+            statement.execute();
+        }finally {
+            closeStatement(statement);
+        }
     }
 }

@@ -293,7 +293,7 @@ input:required{
     text-decoration: none;
 }
 
-.autocomplete-suggestions { margin-top: -10px; border: 1px solid #999; background: #FFF;}
+.autocomplete-suggestions { overflow-x: auto; margin-top: -10px; border: 1px solid #999; background: #FFF;}
 .autocomplete-suggestion { padding: 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-no-suggestion {padding: 5px}
 .autocomplete-selected { background: #F0F0F0; }

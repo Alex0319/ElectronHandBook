@@ -60,28 +60,31 @@ public class Mark extends AbstractEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (!(o instanceof Mark)){
+        if (!(o instanceof Mark)) {
+            return false;
+        }
+        if (!super.equals(o)) {
             return false;
         }
 
         Mark mark1 = (Mark) o;
 
-        if (mark != mark1.mark){
+        if (study != null ? !study.equals(mark1.study) : mark1.study != null) {
             return false;
         }
-        if (study != null ? !study.equals(mark1.study) : mark1.study != null){
+        if (student != null ? !student.equals(mark1.student) : mark1.student != null) {
             return false;
         }
-        if (student != null ? !student.equals(mark1.student) : mark1.student != null){
+        if (date != null ? !date.equals(mark1.date) : mark1.date != null) {
             return false;
         }
-        if (date != null ? !date.equals(mark1.date) : mark1.date != null){
+        if (professor != null ? !professor.equals(mark1.professor) : mark1.professor != null) {
             return false;
         }
-        if (professor != null ? !professor.equals(mark1.professor) : mark1.professor != null){
+        if (mark != null ? !mark.equals(mark1.mark) : mark1.mark != null) {
             return false;
         }
         return comments != null ? comments.equals(mark1.comments) : mark1.comments == null;
@@ -89,11 +92,12 @@ public class Mark extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        int result = study != null ? study.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (study != null ? study.hashCode() : 0);
         result = 31 * result + (student != null ? student.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (professor != null ? professor.hashCode() : 0);
-        result = 31 * result + mark;
+        result = 31 * result + (mark != null ? mark.hashCode() : 0);
         result = 31 * result + (comments != null ? comments.hashCode() : 0);
         return result;
     }

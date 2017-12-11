@@ -24,16 +24,19 @@ public class StudentDto extends AbstractEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this == o){
             return true;
         }
-        if (!(o instanceof StudentDto)) {
+        if (!(o instanceof StudentDto)){
+            return false;
+        }
+        if (!super.equals(o)){
             return false;
         }
 
         StudentDto that = (StudentDto) o;
 
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) {
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null){
             return false;
         }
         return secondName != null ? secondName.equals(that.secondName) : that.secondName == null;
@@ -41,7 +44,8 @@ public class StudentDto extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
         return result;
     }

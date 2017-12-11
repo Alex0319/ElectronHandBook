@@ -15,10 +15,13 @@ public class StudyDto extends AbstractEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (!(o instanceof StudyDto)){
+        if (!(o instanceof StudyDto)) {
+            return false;
+        }
+        if (!super.equals(o)) {
             return false;
         }
 
@@ -29,6 +32,8 @@ public class StudyDto extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }

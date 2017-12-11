@@ -19,13 +19,19 @@ public class Group extends AbstractEntity{
         if (!(o instanceof Group)) {
             return false;
         }
+        if (!super.equals(o)) {
+            return false;
+        }
+
         Group group = (Group) o;
-        return Double.compare(group.avgMark, avgMark) == 0;
+
+        return avgMark != null ? avgMark.equals(group.avgMark) : group.avgMark == null;
     }
 
     @Override
     public int hashCode() {
-        long temp = Double.doubleToLongBits(avgMark);
-        return (int) (temp ^ (temp >>> 32));
+        int result = super.hashCode();
+        result = 31 * result + (avgMark != null ? avgMark.hashCode() : 0);
+        return result;
     }
 }

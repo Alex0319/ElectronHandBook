@@ -6,6 +6,7 @@ import by.iba.electronhandbook.exception.DaoException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySqlAbstractDao implements GenericDao<T> {
     private final String GET_ALL;
@@ -14,12 +15,18 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
     private final String UPDATE;
     private final String REMOVE;
 
+    private int lastInsertedId;
+
     public MySqlGenericDaoImpl(String getAll, String getById, String add, String update, String remove){
         GET_ALL = getAll;
         GET_BY_ID = getById;
         ADD = add;
         UPDATE = update;
         REMOVE = remove;
+    }
+
+    protected int getLastInsertedId(){
+        return lastInsertedId;
     }
 
     @Override
@@ -62,24 +69,21 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
         }catch (SQLException e){
             throw new DaoException(e);
         }finally {
-            closeConnection(connection, statement);
+                closeConnection(connection, statement);
         }
         return entities;
     }
 
     @Override
     public void add(T entity) throws DaoException {
-        PreparedStatement statement = null;
         Connection connection = null;
         try {
             connection = getConnection();
-            statement = connection.prepareStatement(ADD);
-            fillStatement(statement, entity);
-            statement.execute();
+            addEntity(connection, entity);
         } catch (SQLException | NullPointerException e) {
             throw new DaoException(e);
         } finally {
-            closeConnection(connection, statement);
+            closeConnection(connection, null);
         }
     }
 
@@ -103,7 +107,6 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
 
     @Override
     public void update(int id, T entity) throws DaoException {
-        PreparedStatement statement = null;
         Connection connection = null;
         try {
             connection = getConnection();
@@ -111,7 +114,7 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
-            closeConnection(connection, statement);
+            closeConnection(connection, null);
         }
     }
 
@@ -137,12 +140,28 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
         return entity;
     }
 
-    private void fillStatementQueryCondition(PreparedStatement statement, String[] params) throws SQLException{
+    private final void fillStatementQueryCondition(PreparedStatement statement, String[] params) throws SQLException{
         int paramsCount = statement.getParameterMetaData().getParameterCount();
         if(paramsCount != 0){
             for(int i = 0; i < paramsCount; i++){
                 setParam(statement, params[i], i+1);
             }
+        }
+    }
+
+    protected void addEntity(Connection connection, T entity) throws SQLException{
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        try {
+            statement = connection.prepareStatement(ADD, Statement.RETURN_GENERATED_KEYS);
+            fillStatement(statement, entity);
+            statement.executeUpdate();
+            resultSet = statement.getGeneratedKeys();
+            if(resultSet.next()){
+                lastInsertedId = (int)resultSet.getLong(1);
+            }
+        }finally {
+            closeStatement(statement);
         }
     }
 
@@ -155,6 +174,20 @@ public abstract class MySqlGenericDaoImpl<T extends AbstractEntity> extends MySq
         }finally {
             closeStatement(statement);
         }
+    }
+
+    protected final <E extends AbstractEntity> String getRelatedEntityIds(Set<E> relatedEntities){
+        if(relatedEntities == null){
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (E entity: relatedEntities) {
+            builder.append(entity.getId());
+            builder.append(',');
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        return builder.toString();
     }
 
     protected abstract T fillEntity(ResultSet resultSet) throws SQLException;

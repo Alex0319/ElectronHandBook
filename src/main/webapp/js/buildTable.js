@@ -66,7 +66,7 @@ function setHtml(nameTable){
                     futureQueryForID[key] = key;
                     additionalString += '<td class="embeddedTd" id="' + (Data[j][key])['id'] + '" data-toggle="modal" data-target="#modalWindow' + deep + '" onclick="generateModals(this)">' + buildObjStr(Data[j][key]) + '</td>';
                 } else
-                    additionalString += '<td>' + Data[j][key] + '</td>';
+                    additionalString += '<td>' + (Data[j][key] ? Data[j][key] : key + ' not specified')  + '</td>';
             }
 
             additionalString += '<td class="changeTd" onclick="editRow(this.parentNode)"><div class="settingsIcon"><img src="/images/pencil32.png"/></div>' +
@@ -90,8 +90,9 @@ function buildSelectsForForm(data, obj) {
                         result = ((data[key])[i])[value] + ' ' + result;
                         selected = (obj[key])[value] == ((data[key])[i])[value] ? 'selected':'';
                     }
-                    else
+                    else{
                         result += ((data[key])[i])[value] + ' ';
+                    }
                 }
             }
             options += '<option value="' + ((data[key])[i])['id'] + '" '+ selected +'>' + result.trim() + '</option>';

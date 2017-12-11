@@ -1,6 +1,7 @@
 package by.iba.electronhandbook.service.impl;
 
 import by.iba.electronhandbook.bean.Professor;
+import by.iba.electronhandbook.bean.Study;
 import by.iba.electronhandbook.bean.dto.ProfessorDto;
 import by.iba.electronhandbook.dao.impl.ProfessorDaoImpl;
 import by.iba.electronhandbook.exception.ServiceException;
@@ -8,9 +9,7 @@ import by.iba.electronhandbook.service.AbstractService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProfessorServiceImpl extends AbstractService<Professor> {
     public ProfessorServiceImpl() {
@@ -38,6 +37,9 @@ public class ProfessorServiceImpl extends AbstractService<Professor> {
             }
             if(params.containsKey("prevId")){
                 id = Integer.parseInt(params.get("prevId")[0]);
+            }
+            if(params.containsKey("study")){
+                professor.setStudies(getRelatedEntityIds(params.get("study"), Study.class));
             }
         } catch (ParseException e) {
             throw new ServiceException(e);

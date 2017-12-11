@@ -50,7 +50,7 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor> implements 
                 if(!resultSet.wasNull()){
                     study.setName(resultSet.getString("NAME"));
                     if(!map.containsKey(professor.getId())){
-                        map.put(professor.getId(), new HashSet<Study>());
+                        map.put(professor.getId(), new LinkedHashSet<Study>());
                     }
                     map.get(professor.getId()).add(study);
                 }
@@ -72,20 +72,48 @@ public class ProfessorDaoImpl extends MySqlGenericDaoImpl<Professor> implements 
 
     @Override
     public List<Professor> getAllCorrespondingToCondition(String queryName, String[] params) throws DaoException {
-        return super.getAllCorrespondingToCondition(GET_MATCH_PROFESSORS ,params);
+        String query = GET_MATCH_PROFESSORS;
+        if(queryName.equals("query[]") && params.length > 1){
+            StringBuilder stringBuilder = new StringBuilder(query).append(" AND NOT `ID` IN (");
+            for (int i = 1; i < params.length; i++){
+                stringBuilder.append("?,");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1).append(')');
+            query = stringBuilder.toString();
+        }
+        return super.getAllCorrespondingToCondition(query ,params);
+    }
+
+    @Override
+    protected void addEntity(Connection connection, Professor entity) throws SQLException {
+        super.addEntity(connection, entity);
+        entity.setId(getLastInsertedId());
+        callChangeRelatedStudiesProcedure(connection, ADD_RELATED_ENTITIES, entity);
     }
 
     @Override
     protected void updateEntity(Connection connection, Professor entity) throws SQLException {
         super.updateEntity(connection, entity);
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(GET_STUDIES_OF_PROFESSOR);
-            statement.setInt(1, entity.getId());
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()){
+        callChangeRelatedStudiesProcedure(connection, UPDATE_RELATED_ENTITIES, entity);
+    }
 
+    private void callChangeRelatedStudiesProcedure(Connection connection, String procedureCall, Professor entity) throws SQLException{
+        CallableStatement statement = null;
+        try {
+            statement = connection.prepareCall(procedureCall);
+            statement.setInt(1, entity.getId());
+            statement.setString(2, "PROFESSOR_ID");
+            statement.setString(3, "STUDY_ID");
+            statement.setString(4, "study_professor");
+
+            String relatedEntityIds = getRelatedEntityIds(entity.getStudies());
+            if(relatedEntityIds == null || relatedEntityIds.isEmpty()){
+                statement.setNull(5, Types.VARCHAR);
+            }else{
+                statement.setString(5, relatedEntityIds);
             }
+
+            statement.execute();
         }finally {
             closeStatement(statement);
         }

@@ -1,6 +1,8 @@
 (function($){
+    var tagHtml = '';
+
     $.confirm = function(params){
-        var buttonHTML = '';
+        var buttonHtml = '';
 
         if($('#updateAddOverlay').length){
             // A confirm is already shown on the page:
@@ -14,7 +16,7 @@
         $.each(params.buttons,function(name,obj){
             var buttonClass = name !== 'Cancel' ? 'submit' : '';
 
-            buttonHTML += '<a href="#" class="'+ buttonClass +' button '+obj['class']+'">'+name+'<span></span></a>';
+            buttonHtml += '<a href="#" class="'+ buttonClass +' button '+obj['class']+'">'+name+'<span></span></a>';
             if(!obj.action){
                 obj.action = function(){};
             }
@@ -27,7 +29,7 @@
             '<h1>',params.title,'</h1>',
             '<div class="updateAdd"></div>',
             '<div id="confirmButtons">',
-            buttonHTML,
+            buttonHtml,
             '</div></div></div></div>'
         ].join('');
 
@@ -66,21 +68,28 @@
         });
     };
 
-    $.displayRecords = function (records, elementId) {
-        var template = $.get('/templates/admin/elementTag.html', function (data, status) {
+    $.displayRecords = function (records) {
+        $.get('/templates/admin/elementTag.html', function (data, status) {
             if(status=='success'){
-                for(var i = 0; i < records.length; i++){
-                    var record = buildObjStr(records[i]);
-                    var id = records[i]['id'];
-                    $('.selectedItems').append(data);
-                    $('.addedElement').attr('data-id', id);
-                    $('.elementTagSection').attr('title', record);
-                    $('.addedElement .elementTagText').text(record);
-                    $('.addedElement').removeClass('addedElement');
-                }
+                tagHtml = data;
+                $.formTagsList(data, records);
             }
         });
     };
+
+    $.formTagsList = function (tagHtml, records) {
+        for(var i = 0; i < records.length; i++){
+            $.formTagElement(tagHtml, records[i]['id'], buildObjStr(records[i]));
+        }
+    }
+
+    $.formTagElement = function (htmlData, id, value) {
+        $('.selectedItems').append(htmlData);
+        $('.addedElement').attr('data-id', id);
+        $('.elementTagSection').attr('title', value);
+        $('.addedElement .elementTagText').text(value);
+        $('.addedElement').removeClass('addedElement');
+    }
 
     $.setInputAutoComplete = function () {
         if($('.searchInput').length){
@@ -97,9 +106,28 @@
                 transformResult: function (response) {
                     return {
                         suggestions: response[id].map(function (obj) {
-                            return buildObjStr(obj);
+                            return { "value": buildObjStr(obj), "data": obj['id'] };
                         })
                     }
+                },
+                onSelect: function (selectedItem) {
+                    $('.searchInput').val('');
+                    if(tagHtml){
+                        $.formTagElement(tagHtml, selectedItem['data'], selectedItem['value']);
+                    }else{
+                        var value = selectedItem['value'];
+                        value = value.substr(value.indexOf(' ') + 1);
+                        $.displayRecords([{ 'id': selectedItem['data'], 'description': value }]);
+                    }
+                },
+                onSearchStart: function (params) {
+                    var tagsInfo = getElementTagValues();
+                    if(tagsInfo){
+                        var query = params['query'];
+                        params['query'] = tagsInfo['values'];
+                        params['query'].unshift(query);
+                    }
+                    return params;
                 },
                 zIndex: 1080
             });

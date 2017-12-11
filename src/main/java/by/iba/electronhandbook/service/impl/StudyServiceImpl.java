@@ -1,14 +1,13 @@
 package by.iba.electronhandbook.service.impl;
 
+import by.iba.electronhandbook.bean.Professor;
 import by.iba.electronhandbook.bean.Study;
 import by.iba.electronhandbook.bean.dto.StudyDto;
 import by.iba.electronhandbook.dao.impl.StudyDaoImpl;
 import by.iba.electronhandbook.exception.ServiceException;
 import by.iba.electronhandbook.service.AbstractService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StudyServiceImpl extends AbstractService<Study>{
     public StudyServiceImpl() {
@@ -32,6 +31,9 @@ public class StudyServiceImpl extends AbstractService<Study>{
         }
         if(params.containsKey("prevId")){
             id = Integer.parseInt(params.get("prevId")[0]);
+        }
+        if(params.containsKey("professor")){
+            study.setProfessors(getRelatedEntityIds(params.get("professor"), Professor.class));
         }
         return study;
     }

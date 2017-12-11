@@ -231,15 +231,25 @@ function getData() {
     for (var i = 0; i<inputs.length; i++){
         result[inputs[i].id] = $(inputs[i]).val();
     }
+    var tagsInfo = getElementTagValues();
+    if(tagsInfo){
+        result[tagsInfo['id']] = tagsInfo['values'];
+    }
+    return result;
+}
+
+function getElementTagValues(){
     if($('.selectedItems').length)
     {
         var id = $('.selectedItems').attr('id');
         var items = $('.selectedItems').find('.elementTag');
-        result[id] = new Array();
-        for(i=0; i < items.length; i++)
-            result[id].push($(items[i]).data('id'));
+        var tagValues = new Array();
+        for(i=0; i < items.length; i++) {
+            tagValues.push($(items[i]).data('id'));
+        }
+        return {id: id, values: tagValues};
     }
-    return result;
+    return null;
 }
 
 function clearInputs() {
